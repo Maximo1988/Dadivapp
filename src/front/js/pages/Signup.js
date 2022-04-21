@@ -26,11 +26,17 @@ export const Signup = () => {
               className="form-control mb-2"
               placeholder="******"
             />
-            <label className="mb-2">Name</label>
+            <label className="mb-2">First Name</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Name"
+              placeholder="First Name"
+            />
+            <label className="mb-2">Last Name</label>
+            <input
+              type="text"
+              className="form-control mb-2"
+              placeholder="Last Name"
             />
             <label className="mb-2">Address</label>
             <input
