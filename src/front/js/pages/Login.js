@@ -5,6 +5,8 @@ export const Login = () => {
   const [pass, setPass] = React.useState("");
   const [error, setError] = React.useState(null);
 
+  const [login, setLogin] = React.useState(false);
+
   const procesarDatos = (e) => {
     e.preventDefault();
     if (!email.trim() && !pass.trim()) {
@@ -56,6 +58,7 @@ export const Login = () => {
             <button
               className="btn btn-lg btn-dark btn-block w-100"
               type="submit"
+              onClick={() => setLogin(true)}
             >
               LogIn
             </button>

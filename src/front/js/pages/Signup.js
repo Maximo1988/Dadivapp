@@ -1,4 +1,5 @@
 import React from "react";
+import Swal from "sweetalert2";
 
 export const Signup = () => {
   const [email, setEmail] = React.useState("");
@@ -12,13 +13,47 @@ export const Signup = () => {
 
   const [error, setError] = React.useState(null);
 
+  const procesarDatos = (e) => {
+    e.preventDefault();
+    if (
+      !email.trim() ||
+      !pass.trim() ||
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !address.trim() ||
+      !phone.trim() ||
+      !document.trim() ||
+      !paypalLink.trim()
+    ) {
+      setError("Completar todos los datos!");
+      return;
+    }
+
+    let minNumberofChars = 6;
+    let maxNumberofChars = 16;
+    let regularExpression =
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    if (pass.length < minNumberofChars || pass.length > maxNumberofChars) {
+      return false;
+    }
+    if (!regularExpression.test(pass)) {
+      Swal.fire(
+        "password should contain atleast one number and one special character",
+        "Click the button",
+        "error"
+      );
+      return false;
+    }
+    setError(null);
+  };
+
   return (
     <div className="mt-5">
       <h3 className="text-center">Sign Up</h3>
       <hr />
       <div className="row justify-content-center">
         <div className="col-12 col-sm-8 col-md-6 col-xl-4">
-          <form>
+          <form onSubmit={procesarDatos}>
             <label className="mb-2">Email</label>
             <input
               type="email"
@@ -85,26 +120,30 @@ export const Signup = () => {
             />
             <div className="form-check mt-3">
               <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck1"
+                className="form-check-input"
+                type="radio"
+                name="exampleRadios"
+                id="exampleRadios1"
+                value="option1"
+                defaultChecked
               />
-              <label className="form-check-label" for="defaultCheck1">
+              <label className="form-check-label" forhtml="exampleRadios1">
                 Beneficiario
               </label>
             </div>
             <div className="form-check mt-3 mb-3">
               <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck2"
+                className="form-check-input"
+                type="radio"
+                name="exampleRadios"
+                id="exampleRadios2"
+                value="option2"
               />
-              <label class="form-check-label" for="defaultCheck2">
+              <label className="form-check-label" forhtml="exampleRadios1">
                 Donador
               </label>
             </div>
+            {error ? <div className="alert alert-danger">{error}</div> : null}
             <button
               className="btn btn-lg btn-dark btn-block w-100"
               type="submit"
