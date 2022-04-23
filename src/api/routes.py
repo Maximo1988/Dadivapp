@@ -16,3 +16,18 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+
+#create a donation
+
+@api.route('/user', methods=['POST'])
+def get_user():
+    body=request.get_json()
+    if body is None:
+        raise APIException("Tienes que enviar información en el body",status_code=400)
+    if body['email'] is None:
+        raise APIException("Tienes que enviar el correo ")
+    user=User.query.filter_by(email=body['email']).first()
+    if user is None :
+        raise APIException("El usuario no existe")
+    return jsonify(user.serialize()),200
