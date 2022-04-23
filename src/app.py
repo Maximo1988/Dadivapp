@@ -7,10 +7,11 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_bcrypt import Bcrypt
 
 #from models import Person
 
@@ -18,6 +19,9 @@ ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+bcrypt = Bcrypt(app)
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -54,6 +58,53 @@ def sitemap():
         return generate_sitemap(app)
     return send_from_directory(static_file_dir, 'index.html')
 
+@app.route('/api/User', methods=['POST'])
+def new_user():
+    if request.json is None:
+        raise APIException("Se debe de enviar informacion en el body del request", status_code=400)
+
+    first_name = request.json.get("first_name", None)
+    last_name = request.json.get("last_name", None)
+    email = request.json.get("email", None)
+    address = request.json.get("address", None)
+    password = request.json.get("password", None)
+    phone = request.json.get("phone", None)
+    document = request.json.get("document", None)
+    country = request.json.get("country", None)
+    role = request.json.get("role", None)
+    paypal_link = request.json.get("paypal_link", None)
+    print(first_name)
+
+    if first_name is None:
+        raise APIException("Falta ingresar el nombre", status_code=400)
+    if last_name is None:
+        raise APIException("Falta ingresar el apellido", status_code=400)
+    if email is None:
+        raise APIException("Falta ingresar el email", status_code=400)
+    if address is None:
+        raise APIException("Falta ingresar la dirección", status_code=400)
+    if password is None:
+        raise APIException("Falta ingresar la contraseña", status_code=400)
+    if phone is None:
+        raise APIException("Falta ingresar el teléfono", status_code=400)
+    if document is None:
+        raise APIException("Falta ingresar el numero del documento", status_code=400)
+    if country is None:
+        raise APIException("Falta ingresar el país", status_code=400)
+    if role is None:
+        raise APIException("Falta ingresar el rol", status_code=400)
+    if paypal_link is None:
+        raise APIException("Falta ingresar el link de paypal", status_code=400)
+
+    pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+    
+
+    new_users= User(first_name=first_name, last_name=last_name, email=email, address=address, password=pw_hash,
+                    phone=phone, document=document, country=country, role=role, paypal_link=paypal_link, is_active=True)
+    db.session.add(new_users)
+    db.session.commit()
+    return jsonify(new_users.serialize()), 200
+
 # any other endpoint will try to serve it like a static file
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
@@ -62,7 +113,6 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
     return response
-
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
