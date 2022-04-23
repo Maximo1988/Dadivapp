@@ -2,25 +2,38 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import ConjuntoCards from "../component/conjuntoCards";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://github.com/4GeeksAcademy/react-flask-hello/tree/95e0540bd1422249c3004f149825285118594325/docs">
-					Read documentation
+		<div>
+			<div className="text-center text-white pt-5 pb-5 cabeceraBackgroundImg">
+				<h1><b>Dadivapp</b></h1>
+				<a >
+					<b>Otra opción de ayudar y ser ayudado.</b>
 				</a>
-			</p>
+			</div>
+			<br></br>
+			<div className="text-center ">
+				<h3 className="text-info">¿Que se busca?</h3>
+				<div className="info">
+					<p >El fin de esta página es hacer crecer el emprendimiento personal que puede ayudar a la comunidad o puede ser el surgimiento de nuevas marcas que con la ayuda de otros que quieran demostrar su apoyo y el avance de la sociedad puedan ser realizados satisfactoriamente.</p>
+				</div>
+			</div>
+			<div className="text-center ">
+				<h3 className="text-info">¿Como funciona?</h3>
+				<div className="info">
+					<p>Es bastante fácil simplemente  tienes que ser una persona que tenga un gran emprendimiento y lo quiere ampliar o ser alguien que quiera demostrar su apoyo y con cualquier cantidad de ayuda económica.</p>
+				</div>
+			</div>
+			<div className="text-center mt-5">
+				<h3 className="text-info">
+					¿Que dicen de nosotros?
+				</h3>
+			</div>
+			<ConjuntoCards />
 		</div>
 	);
 };
