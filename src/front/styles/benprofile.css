@@ -1,0 +1,28 @@
+body {
+  font-family: "Lobster", cursive;
+  font-size: 20px;
+  background-size: cover;
+  background: white;
+}
+.overlay {
+  background-color: rgba(4, 14, 22, 0.1);
+  width: 100%;
+  padding-middle: 40%;
+  position: relative;
+  top: 50%;
+  transform: translateY(50%);
+}
+li {
+  list-style: none;
+}
+li a {
+  background-color: hidden;
+  width: 100%;
+  position: relative;
+  top: 50%;
+  transform: translateY(100%);
+}
+li a:hover,
+a:focus {
+  background-color: yellow;
+}
