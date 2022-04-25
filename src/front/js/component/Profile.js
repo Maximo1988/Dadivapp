@@ -1,35 +1,29 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { Context } from "../store/appContext";
 
-export const Profile = () => {
+export const Profile = (props) => {
   return (
     <div className="row justify-content-center">
-      <div className="col-12 col-sm-8 col-md-6 col-xl-4">
-        <div class="list-group">
-          <button
-            type="button"
-            class="list-group-item list-group-item-action active"
-            aria-current="true"
+      <form>
+        <div className="form-group row">
+          <label
+            /* forhtml="staticEmail" */ className="col-sm-2 col-form-label"
           >
-            {props.firstName} {props.lastName}
-          </button>
-          <button type="button" class="list-group-item list-group-item-action">
-            A second item
-          </button>
-          <button type="button" class="list-group-item list-group-item-action">
-            A third button item
-          </button>
-          <button type="button" class="list-group-item list-group-item-action">
-            A fourth button item
-          </button>
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            disabled
-          >
-            A disabled button item
-          </button>
+            Email
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              readOnly
+              className="form-control-plaintext"
+              id="staticEmail"
+              disabled={true}
+              value="ariel@ariel"
+            />
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

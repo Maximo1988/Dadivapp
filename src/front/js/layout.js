@@ -29,9 +29,6 @@ const Layout = () => {
             <Route exact path="/beneficiaries">
               <Beneficiaries />
             </Route>
-            <Route exact path="/single/:theid">
-              <Single />
-            </Route>
             <Route exact path="/login">
               <Login />
             </Route>
