@@ -7,6 +7,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Beneficiaries } from "./pages/Beneficiaries";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 
@@ -24,6 +25,9 @@ const Layout = () => {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/beneficiaries">
+              <Beneficiaries />
             </Route>
             <Route exact path="/login">
               <Login />
