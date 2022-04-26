@@ -55,12 +55,14 @@ class User(db.Model):
 class Projects(db.Model):
     __tablename__='Projects'
     id = db.Column(db.Integer, primary_key=True)
-    name= db.Column(db.String(120), unique=True, nullable=False)
+    name= db.Column(db.String(120), nullable=False)
     date_start= db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow() )
     date_finish= db.Column(db.DateTime(timezone=True), nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     id_beneficiary= db.Column(db.Integer,db.ForeignKey('User.id'), nullable=False)
     id_beneficiary_relation= relationship(User,primaryjoin=id_beneficiary==User.id)
+    description= db.Column(db.String(300), nullable=False)
+    donative_amount= db.Column(db.String(30), nullable=False)
 
     def __repr__(self):
         return f'<Projects {self.id} name {self.name}>'
