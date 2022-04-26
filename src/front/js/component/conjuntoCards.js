@@ -6,11 +6,13 @@ const ConjuntoCards = () => {
     { Header: "Maria Carmen", Info: "Beneficiario", Description: "!Me encanta esta página¡ gracias a todas las personas que me han donado logre sacar adelante mi negocio de ropa." },
      { Header: "Antonia Rodriguez", Info: "Donador", Description: "Como una persona que le gusta ayudar a las personas que quieres trabajar me parece una excelente página, y me sorprende la cantidad de personas que tienen ideas maravillosas que puedoa apoyar." }, 
      { Header: "Francisco Lopez", Info: "Beneficiario", Description: "Todo lo que pienso de esta página es positivo, en simplemete una gran ayuda para aquellos que quieren tener otra fuente de ingresos desde el emprendimiento." }]
-    return (
+         
+     return (
         <div className='container'>
             <div className="row">{comments.map((comment, index) => {
-                return (<div className='col'><CardOpinion key={index} Header={comment.Header} Info={comment.Info} Description={comment.Description} /> </div>)
+                return (<div key={index} className='col'><CardOpinion  Header={comment.Header} Info={comment.Info} Description={comment.Description} /> </div>)
             })}</div></div>
+            
     )
 }
 

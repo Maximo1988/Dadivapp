@@ -5,10 +5,12 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
 
+
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
+import { Donadores } from "./pages/Donadores"
 
 //create your first component
 const Layout = () => {
@@ -27,6 +29,9 @@ const Layout = () => {
             </Route>
             <Route exact path="/login">
               <Login />
+            </Route>
+            <Route exact path="/donadores_page">
+              <Donadores />
             </Route>
             <Route exact path="/signup">
               <Signup />

@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import Donadores from "./Donadores";
 import ConjuntoCards from "../component/conjuntoCards";
 
 export const Home = () => {
@@ -10,7 +9,6 @@ export const Home = () => {
 
 	return (
 		<div>
-			<Donadores/>
 			<div className="text-center text-white pt-5 pb-5 cabeceraBackgroundImg">
 				<h1><b>Dadivapp</b></h1>
 				<a >
