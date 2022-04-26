@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Projects
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -31,3 +31,38 @@ def get_user():
     if user is None :
         raise APIException("El usuario no existe")
     return jsonify(user.serialize()),200
+
+@api.route('/projects', methods=['POST'])
+def post_project():
+    body=request.get_json()
+    if body is None:
+        raise APIException("Tienes que ingresar información del proyecto", status_code=400)
+    if 'name' not in body:
+        raise APIException("Tienes que ingresar el nombre del proyecto")
+    if 'date_finish' not in body:
+        raise APIException("La fecha de finalización no se ha indicado")
+    if 'id_beneficiary' not in body:
+        raise APIException("Tienes que ingresar el ID del beneficiario")
+    if 'description' not in body:
+        raise APIException("Tienes que ingresar la descripción del proyecto")
+    if 'donative_amount' not in body:
+        raise APIException("Falta ingresar un monto a donar")
+
+    user=User.query.get(body['id_beneficiary'])
+    if user is None:
+        raise APIException("El usuario beneficiario no existe")
+
+    add_project=Projects(name=body['name'], date_finish=body['date_finish'], id_beneficiary=body['id_beneficiary'], description=body['description'], donative_amount=body['donative_amount'], is_active=True)
+    db.session.add(add_project)
+    db.session.commit()
+    return jsonify(add_project.serialize()),200
+    
+
+'''@api.route('/projects/<int:project_id>', methods=['DELETE']
+def delete_project(Projects_id):
+    delete_project= Projects.query.get(Projects_id)
+    if delete_project is None:
+        raise APIException("El proyecto que quieres eliminar no ha sido encontrado", status_code=400)
+    db.session.delete(delete_project)
+    db.session.commit()
+    return jsonify(delete_project), 200'''

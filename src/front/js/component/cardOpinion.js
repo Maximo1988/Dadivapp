@@ -1,8 +1,8 @@
-import React from 'react'
-import PropType from 'prop-types'
+import React from "react";
+import PropType from "prop-types";
 
 const CardOpinion = (props) => {
-    return (
+  return (
         <div className="card border-info pb-3 Perfiles w-100">
             <div className="card-header">{props.Header}</div>
             <div className="card-body text-body">

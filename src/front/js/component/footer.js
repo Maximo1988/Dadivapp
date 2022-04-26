@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
 export const Footer = () => (
-	
-	<footer className="footer mt-auto py-3">
+<footer className="footer mt-auto py-3">
 <div clasname="container d-flex ">
 		<div className="m-4 text-info">
 			<b>© 2022 Dadivapp</b>
@@ -25,3 +24,6 @@ export const Footer = () => (
 	</footer>
 
 );
+
+	
+	
