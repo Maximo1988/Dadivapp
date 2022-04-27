@@ -58,11 +58,16 @@ def post_project():
     return jsonify(add_project.serialize()),200
     
 
-'''@api.route('/projects/<int:project_id>', methods=['DELETE']
-def delete_project(Projects_id):
-    delete_project= Projects.query.get(Projects_id)
-    if delete_project is None:
+@api.route('/projects/', methods=['DELETE'])
+def delete_project():
+    body= request.get_json()
+    if body is None:
+        raise APIException("Tienes que agregar el proyecto a eliminar en el body", status_code=400)
+    if 'name' not in body:
+        raise APIException("Tienes que agregar el nombre del proyecto que deseas eliminar", status_code=400)
+    delete_projects= Projects.query.filter_by(name=body['name']).first()
+    if delete_projects is None:
         raise APIException("El proyecto que quieres eliminar no ha sido encontrado", status_code=400)
-    db.session.delete(delete_project)
+    delete_projects.is_active=False
     db.session.commit()
-    return jsonify(delete_project), 200'''
+    return jsonify(delete_projects.serialize()),200
