@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Projects
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -76,3 +76,43 @@ def delete_user():
     user.is_active=False
     db.session.commit()
     return jsonify(user.serialize()),200
+
+@api.route('/projects', methods=['POST'])
+def post_project():
+    body=request.get_json()
+    if body is None:
+        raise APIException("Tienes que ingresar información del proyecto", status_code=400)
+    if 'name' not in body:
+        raise APIException("Tienes que ingresar el nombre del proyecto")
+    if 'date_finish' not in body:
+        raise APIException("La fecha de finalización no se ha indicado")
+    if 'id_beneficiary' not in body:
+        raise APIException("Tienes que ingresar el ID del beneficiario")
+    if 'description' not in body:
+        raise APIException("Tienes que ingresar la descripción del proyecto")
+    if 'donative_amount' not in body:
+        raise APIException("Falta ingresar un monto a donar")
+
+    user=User.query.get(body['id_beneficiary'])
+    if user is None:
+        raise APIException("El usuario beneficiario no existe")
+
+    add_project=Projects(name=body['name'], date_finish=body['date_finish'], id_beneficiary=body['id_beneficiary'], description=body['description'], donative_amount=body['donative_amount'], is_active=True)
+    db.session.add(add_project)
+    db.session.commit()
+    return jsonify(add_project.serialize()),200
+    
+
+@api.route('/projects/', methods=['DELETE'])
+def delete_project():
+    body= request.get_json()
+    if body is None:
+        raise APIException("Tienes que agregar el proyecto a eliminar en el body", status_code=400)
+    if 'name' not in body:
+        raise APIException("Tienes que agregar el nombre del proyecto que deseas eliminar", status_code=400)
+    delete_projects= Projects.query.filter_by(name=body['name']).first()
+    if delete_projects is None:
+        raise APIException("El proyecto que quieres eliminar no ha sido encontrado", status_code=400)
+    delete_projects.is_active=False
+    db.session.commit()
+    return jsonify(delete_projects.serialize()),200
