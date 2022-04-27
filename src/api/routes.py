@@ -63,9 +63,9 @@ def delete_project():
     body= request.get_json()
     if body is None:
         raise APIException("Tienes que agregar el proyecto a eliminar en el body", status_code=400)
-    if 'name' not in body:
-        raise APIException("Tienes que agregar el nombre del proyecto que deseas eliminar", status_code=400)
-    delete_projects= Projects.query.filter_by(name=body['name']).first()
+    if 'id' not in body:
+        raise APIException("Tienes que agregar el ID del proyecto que deseas eliminar", status_code=400)
+    delete_projects= Projects.query.get(body['id'])
     if delete_projects is None:
         raise APIException("El proyecto que quieres eliminar no ha sido encontrado", status_code=400)
     delete_projects.is_active=False
