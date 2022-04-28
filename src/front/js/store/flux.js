@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -29,8 +31,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           console.log(data);
-          localStorage.setItem("token", data.accessToken);
+          localStorage.setItem("token", data.access_token);
+          Swal.fire("Login OK", "Click the button", "success");
         } catch (e) {
+          Swal.fire(e.msg, "Click the button", "error");
           console.error(`error from database -- ${e}`);
         }
       },
@@ -55,40 +59,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const data = await response.json();
 
+          setStore({ dataUser: data });
           console.log(data);
         } catch (e) {
+          removeToken();
+          Swal.fire(e.msg, "Click the button", "error");
           console.error(`error from database -- ${e}`);
         }
       },
     },
-    // getDataUser: async (email) => {
-    //   let myHeaders = new Headers();
-    //   myHeaders.append("Content-Type", "application/json");
 
-    //   let raw = JSON.stringify({
-    //     email: email,
-    //   });
-
-    //   let requestOptions = {
-    //     method: "GET",
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: "follow",
-    //   };
-    //   console.log(requestOptions);
-    // try {
-    //   const response = await fetch(
-    //     process.env.BACKEND_URL + "/api/user",
-    //     requestOptions
-    //   );
-
-    //   const data = await response.json();
-
-    //   console.log(data);
-    // } catch (e) {
-    //   console.error(`error from database -- ${e}`);
-    // }
-    // },
+    removeToken: () => {
+      localStorage.removeItem("token");
+    },
   };
 };
 
