@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const Login = () => {
+  const { store, actions } = useContext(Context);
+
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
   const [error, setError] = React.useState(null);
@@ -26,6 +29,8 @@ export const Login = () => {
     }
     // console.log("correcto...");
     setError(null);
+
+    actions.login(email, pass);
   };
 
   return (
