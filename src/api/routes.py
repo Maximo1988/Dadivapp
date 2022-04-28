@@ -4,6 +4,9 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Projects
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+
 
 api = Blueprint('api', __name__)
 
@@ -18,20 +21,63 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-#create a donation
+#traer datos de un usuario
 
-@api.route('/user', methods=['POST'])
+@api.route('/user', methods=['GET'])
+@jwt_required()
 def get_user():
-    body=request.get_json()
-    if body is None:
-        raise APIException("Tienes que enviar información en el body",status_code=400)
-    if body['email'] is None:
-        raise APIException("Tienes que enviar el correo ")
-    user=User.query.filter_by(email=body['email']).first()
+    current_user = get_jwt_identity()
+    user=User.query.filter_by(email=current_user).first()
     if user is None :
         raise APIException("El usuario no existe")
     return jsonify(user.serialize()),200
 
+
+#actualizar un usuario
+@api.route('/user', methods=['PUT'])
+def update_user ():
+    body= request.get_json()
+    if  body is None :
+        raise APIException("tienes que enviar informacion en el body",status_code=400)
+    if 'current_email' not in body :
+        raise APIException("tienes que enviar un correo del usuario que deseas actualizar actualizar",status_code=400)    
+    user=User.query.filter_by(email=body['current_email']).first()
+    if user is None:
+        raise APIException("El usuario no existe",status_code=400)
+    if 'role'  in body:
+        raise APIException("El rol no se puede actualizar eliminalo del body ")
+    if 'first_name' in body :
+        user.first_name=body['first_name']
+    if 'last_name' in body :
+        user.last_name=body['last_name'] 
+    if 'address' in body:
+        user.addres=body['address'] 
+    if 'phone' in body:
+        user.phone=body['phone']  
+    if 'document' in body:
+        user.document=body['document']
+    if 'paypal_link' in body :
+        user.paypal_link=body['paypal_link']
+
+    db.session.commit()
+    return jsonify(user.serialize()),200
+
+#eliminar un usuario
+@api.route('/user', methods=['DELETE'])
+def delete_user():
+    body= request.get_json()
+    if body is None:
+        raise APIException("Tines que enviar informacion en el body",status_code=400)
+    if 'email' not in body:
+        raise APIException("Tienes que enviar el correo del usuario que deseas eliminar",status_code=400)
+    user=User.query.filter_by(email=body['email']).first()
+    if user is None:
+        raise APIException("El usuario no se encontró",status_code=400)
+    user.is_active=False
+    db.session.commit()
+    return jsonify(user.serialize()),200
+
+#crear un proyecto
 @api.route('/projects', methods=['POST'])
 def post_project():
     body=request.get_json()
@@ -63,9 +109,9 @@ def delete_project():
     body= request.get_json()
     if body is None:
         raise APIException("Tienes que agregar el proyecto a eliminar en el body", status_code=400)
-    if 'name' not in body:
-        raise APIException("Tienes que agregar el nombre del proyecto que deseas eliminar", status_code=400)
-    delete_projects= Projects.query.filter_by(name=body['name']).first()
+    if 'id' not in body:
+        raise APIException("Tienes que agregar el ID del proyecto que deseas eliminar", status_code=400)
+    delete_projects= Projects.query.get(body['id'])
     if delete_projects is None:
         raise APIException("El proyecto que quieres eliminar no ha sido encontrado", status_code=400)
     delete_projects.is_active=False
