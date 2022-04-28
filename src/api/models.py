@@ -45,6 +45,9 @@ class User(db.Model):
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
+            "address": self.address,
+            "country":self.country,
+            "document":self.document,
             "role": self.role,
             "paypal_link": self.paypal_link,
             "is_active": self.is_active
