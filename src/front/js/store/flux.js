@@ -1,44 +1,94 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      // message: null,
-      // demo: [
-      // 	{
-      // 		title: "FIRST",
-      // 		background: "white",
-      // 		initial: "white"
-      // 	},
-      // 	{
-      // 		title: "SECOND",
-      // 		background: "white",
-      // 		initial: "white"
-      // 	}
-      // ]
+      dataUser: [],
     },
     actions: {
-      // // Use getActions to call a function within a fuction
-      // exampleFunction: () => {
-      // 	getActions().changeColor(0, "green");
-      // },
-      // getMessage: () => {
-      // 	// fetching data from the backend
-      // 	fetch(process.env.BACKEND_URL + "/api/hello")
-      // 		.then(resp => resp.json())
-      // 		.then(data => setStore({ message: data.message }))
-      // 		.catch(error => console.log("Error loading message from backend", error));
-      // },
-      // changeColor: (index, color) => {
-      // 	//get the store
-      // 	const store = getStore();
-      // 	//we have to loop the entire demo array to look for the respective index
-      // 	//and change its color
-      // 	const demo = store.demo.map((elm, i) => {
-      // 		if (i === index) elm.background = color;
-      // 		return elm;
-      // 	});
-      // 	//reset the global store
-      // 	setStore({ demo: demo });
+      login: async (email, password) => {
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        let raw = JSON.stringify({
+          email: email,
+          password: password,
+        });
+
+        let requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/user",
+            requestOptions
+          );
+
+          const data = await response.json();
+
+          console.log(data);
+          localStorage.setItem("token", data.accessToken);
+        } catch (e) {
+          console.error(`error from database -- ${e}`);
+        }
+      },
+
+      getDataUser: async () => {
+        const token = localStorage.getItem("token") || "";
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        let requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/user",
+            requestOptions
+          );
+
+          const data = await response.json();
+
+          console.log(data);
+        } catch (e) {
+          console.error(`error from database -- ${e}`);
+        }
+      },
     },
+    // getDataUser: async (email) => {
+    //   let myHeaders = new Headers();
+    //   myHeaders.append("Content-Type", "application/json");
+
+    //   let raw = JSON.stringify({
+    //     email: email,
+    //   });
+
+    //   let requestOptions = {
+    //     method: "GET",
+    //     headers: myHeaders,
+    //     body: raw,
+    //     redirect: "follow",
+    //   };
+    //   console.log(requestOptions);
+    // try {
+    //   const response = await fetch(
+    //     process.env.BACKEND_URL + "/api/user",
+    //     requestOptions
+    //   );
+
+    //   const data = await response.json();
+
+    //   console.log(data);
+    // } catch (e) {
+    //   console.error(`error from database -- ${e}`);
+    // }
+    // },
   };
 };
 
