@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { Redirect } from "react-router-dom";
 
 const getState = ({ getStore, getActions, setStore }) => {
   return {
@@ -33,6 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(data);
           localStorage.setItem("token", data.access_token);
           Swal.fire("Login OK", "Click the button", "success");
+          <Redirect push to="/" />;
         } catch (e) {
           Swal.fire(e.msg, "Click the button", "error");
           console.error(`error from database -- ${e}`);
