@@ -123,10 +123,10 @@ def delete_project():
 def put_project(project_id):
     put_project = Projects.query.get(project_id)
     if put_project is None:
-        raise APIException("Proyecto no actualizado", status_code=404)
+        raise APIException("El proyecto no existe", status_code=404)
     body=request.get_json()
     if body is None:
-        raise APIException("Proyecto no actualizado en el body")
+        raise APIException("Proyecto no existe en el body")
     if "name" in body:
         put_project.name = body["name"]
     if "date_finish" in body:
@@ -139,3 +139,4 @@ def put_project(project_id):
         put_project.donative_amount = body["donative_amount"]
     db.session.commit()
     return jsonify(put_project.serialize()), 200
+
