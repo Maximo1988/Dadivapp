@@ -4,6 +4,9 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Projects
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+
 
 api = Blueprint('api', __name__)
 
@@ -18,16 +21,13 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-#create a donation
+#traer datos de un usuario
 
 @api.route('/user', methods=['GET'])
+@jwt_required()
 def get_user():
-    body=request.get_json()
-    if body is None:
-        raise APIException("Tienes que enviar información en el body",status_code=400)
-    if body['email'] is None:
-        raise APIException("Tienes que enviar el correo ")
-    user=User.query.filter_by(email=body['email']).first()
+    current_user = get_jwt_identity()
+    user=User.query.filter_by(email=current_user).first()
     if user is None :
         raise APIException("El usuario no existe")
     return jsonify(user.serialize()),200
@@ -77,6 +77,7 @@ def delete_user():
     db.session.commit()
     return jsonify(user.serialize()),200
 
+#crear un proyecto
 @api.route('/projects', methods=['POST'])
 def post_project():
     body=request.get_json()
