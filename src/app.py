@@ -13,6 +13,11 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_bcrypt import Bcrypt
 
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")
@@ -22,6 +27,8 @@ app.url_map.strict_slashes = False
 
 bcrypt = Bcrypt(app)
 
+app.config["JWT_SECRET_KEY"] = "4geeks"  # Change this!
+jwt = JWTManager(app)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -73,7 +80,6 @@ def new_user():
     country = request.json.get("country", None)
     role = request.json.get("role", None)
     paypal_link = request.json.get("paypal_link", None)
-    print(first_name)
 
     if first_name is None:
         raise APIException("Falta ingresar el nombre", status_code=400)
@@ -104,6 +110,26 @@ def new_user():
     db.session.add(new_users)
     db.session.commit()
     return jsonify(new_users.serialize()), 200
+@app.route('/api/login',methods=['POST'])
+def login():
+    if request.json is None:
+        raise APIException("Tienes que enviar informacion en el body",status_code=400)
+    email= request.json.get("email",None)
+    password= request.json.get("password",None)
+    if email is None:
+        raise APIException("Tienes que enviar el email de la pesona",status_code=400)
+    if password is None:
+        raise APIException("Tienes que enviar la contraseña del correo",status_code=400)
+    user=User.query.filter_by(email=email).first()
+    if user is None:
+        raise APIException("Este usuario no existe",status_code=400)
+    pw_hash= user.password
+    is_valid_user= bcrypt.check_password_hash(pw_hash, password) # returns True
+    if is_valid_user is False:
+        raise APIException("El usuario o la contraseña no son correctas",status_code=400)
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
+
 
 # any other endpoint will try to serve it like a static file
 @app.route('/<path:path>', methods=['GET'])

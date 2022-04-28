@@ -4,6 +4,9 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Projects
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+
 
 api = Blueprint('api', __name__)
 
@@ -18,16 +21,13 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-#create a donation
+#traer datos de un usuario
 
 @api.route('/user', methods=['GET'])
+@jwt_required()
 def get_user():
-    body=request.get_json()
-    if body is None:
-        raise APIException("Tienes que enviar información en el body",status_code=400)
-    if body['email'] is None:
-        raise APIException("Tienes que enviar el correo ")
-    user=User.query.filter_by(email=body['email']).first()
+    current_user = get_jwt_identity()
+    user=User.query.filter_by(email=current_user).first()
     if user is None :
         raise APIException("El usuario no existe")
     return jsonify(user.serialize()),200
@@ -77,6 +77,7 @@ def delete_user():
     db.session.commit()
     return jsonify(user.serialize()),200
 
+# crear un nuevo proyecto
 @api.route('/projects', methods=['POST'])
 def post_project():
     body=request.get_json()
@@ -102,17 +103,40 @@ def post_project():
     db.session.commit()
     return jsonify(add_project.serialize()),200
     
-
+# eliminar un proyecto
 @api.route('/projects/', methods=['DELETE'])
 def delete_project():
     body= request.get_json()
     if body is None:
         raise APIException("Tienes que agregar el proyecto a eliminar en el body", status_code=400)
-    if 'name' not in body:
-        raise APIException("Tienes que agregar el nombre del proyecto que deseas eliminar", status_code=400)
-    delete_projects= Projects.query.filter_by(name=body['name']).first()
+    if 'id' not in body:
+        raise APIException("Tienes que agregar el ID del proyecto que deseas eliminar", status_code=400)
+    delete_projects= Projects.query.get(body['id'])
     if delete_projects is None:
         raise APIException("El proyecto que quieres eliminar no ha sido encontrado", status_code=400)
     delete_projects.is_active=False
     db.session.commit()
     return jsonify(delete_projects.serialize()),200
+
+# actualizar un proyecto
+@api.route('/projects/<int:project_id>', methods=['PUT'])
+def put_project(project_id):
+    put_project = Projects.query.get(project_id)
+    if put_project is None:
+        raise APIException("El proyecto no existe", status_code=404)
+    body=request.get_json()
+    if body is None:
+        raise APIException("Proyecto no existe en el body")
+    if "name" in body:
+        put_project.name = body["name"]
+    if "date_finish" in body:
+        put_project.date_finish = body["date_finish"]
+    if "id_beneficiary" in body:
+        put_project.id_beneficiary = body["id_beneficiary"]
+    if "description" in body:
+        put_project.description = body["description"]
+    if "donative_amount" in body:
+        put_project.donative_amount = body["donative_amount"]
+    db.session.commit()
+    return jsonify(put_project.serialize()), 200
+
