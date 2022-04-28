@@ -34,7 +34,7 @@ const Layout = () => {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Route exact path="/donadores_page">
+            <Route exact path="/donadores">
               <Donadores />
             </Route>
             <Route exact path="/signup">

@@ -34,7 +34,7 @@ const CardInfo = () => {
         {comments.map((comment, index) => {
           return (
             <div key={index} className="col">
-              <CardContainer
+              <CardContainer index={index}
                 Header={comment.Header}
                 Info={comment.Info}
                 Description={comment.Description}

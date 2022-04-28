@@ -3,6 +3,11 @@ import PropType from "prop-types";
 
 export const CardContainer = (props) => {
   const [statusCard, setStatusCard] = useState(false);
+  const [toggle, setToggle] = useState(false)
+
+  let toggleOpen = () => setToggle(!toggle)
+  const menuClass = `dropdown-menu${(toggle ? " show" : "")}`
+
   return (
     <div>
       <div className="card estilo border-info pb-3 ml-5 w-100">
@@ -35,12 +40,42 @@ export const CardContainer = (props) => {
           ) : (
             ""
           )}
-          <button
-            className="btn btn-info text-white px-3"
-            style={{ float: "right" }}
-          >
-            Donate
-          </button>
+
+          <div className="dropdown myDropdown px-3" style={{ float: "right" }} onClick={() => toggleOpen()}>
+            <button
+              className="btn btn-info text-white dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
+              Donate
+            </button>
+            <div className={menuClass} aria-labelledby="dropdownMenuButton ">
+              <ul className="text-info bg-white">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"></input>
+                  <label class="custom-control-label" for="customRadio1">Donate $1000</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"></input>
+                  <label class="custom-control-label" for="customRadio1">Donate $1500</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"></input>
+                  <label class="custom-control-label" for="customRadio1">Donate $2000</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"></input>
+                  <label class="custom-control-label" for="customRadio1">Donate $2500</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"></input>
+                  <label class="custom-control-label" for="customRadio1">Donate $2500</label>
+                </div>
+              </ul>
+            </div>
+          </div>
         </div>
         <footer className="blockquote-footer">
           <cite title="Source Title">dd/mm/year</cite>
@@ -49,7 +84,7 @@ export const CardContainer = (props) => {
           <cite title="Source Title">dd/mm/year</cite>
         </footer>
       </div>
-    </div>
+    </div >
   );
 };
 
