@@ -25,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/user",
+            process.env.BACKEND_URL + "/api/login",
             requestOptions
           );
 
