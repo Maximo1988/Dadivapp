@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 13fe47b944e8
+Revision ID: e10ad5aac9c7
 Revises: 
-Create Date: 2022-04-22 03:24:49.060076
+Create Date: 2022-04-28 00:44:38.149808
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '13fe47b944e8'
+revision = 'e10ad5aac9c7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,13 +29,20 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('first_name', sa.String(length=80), nullable=False),
     sa.Column('last_name', sa.String(length=80), nullable=False),
+    sa.Column('address', sa.String(length=80), nullable=False),
+    sa.Column('password', sa.String(length=64), nullable=False),
+    sa.Column('phone', sa.String(length=20), nullable=False),
+    sa.Column('document', sa.String(length=80), nullable=False),
+    sa.Column('country', sa.String(length=30), nullable=False),
     sa.Column('role', sa.Integer(), nullable=False),
     sa.Column('paypal_link', sa.String(length=120), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['role'], ['Role.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('paypal_link')
+    sa.UniqueConstraint('password'),
+    sa.UniqueConstraint('paypal_link'),
+    sa.UniqueConstraint('phone')
     )
     op.create_table('Projects',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -44,9 +51,10 @@ def upgrade():
     sa.Column('date_finish', sa.DateTime(timezone=True), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.Column('id_beneficiary', sa.Integer(), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
+    sa.Column('donative_amount', sa.String(length=30), nullable=False),
     sa.ForeignKeyConstraint(['id_beneficiary'], ['User.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('Donations',
     sa.Column('id', sa.Integer(), nullable=False),
