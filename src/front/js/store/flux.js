@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       dataUser: [],
+      token: "",
     },
     actions: {
       login: async (email, password) => {
@@ -33,10 +34,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           console.log(data);
           localStorage.setItem("token", data.access_token);
-          Swal.fire("Login OK", "Click the button", "success");
-          <Redirect push to="/" />;
+          // Swal.fire("Login OK", "Click the button", "success");
+          setStore({ token: data.access_token });
         } catch (e) {
-          Swal.fire(e.msg, "Click the button", "error");
+          // Swal.fire(e.msg, "Click the button", "error");
           console.error(`error from database -- ${e}`);
         }
       },
