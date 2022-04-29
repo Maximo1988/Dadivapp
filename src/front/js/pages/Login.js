@@ -1,5 +1,8 @@
 import React, { useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
+
+import Swal from "sweetalert2";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
@@ -30,11 +33,26 @@ export const Login = () => {
     // console.log("correcto...");
     setError(null);
 
-    actions.login(email, pass);
+    actions.login(email, pass).then(() => {
+      if (store.token) {
+        Swal.fire("Login OK", "Click the button", "success");
+      } else {
+        Swal.fire(e.msg, "Click the button", "error");
+      }
+    });
   };
+
+  // const token = localStorage.getItem("token");
+  // React.useEffect(() => {
+  //   if (token) {
+  //     return <Redirect to="/" />;
+  //   }
+  // }, [token]);
 
   return (
     <div className="mt-5">
+      {store.token != "" ? <Redirect to="/" /> : null}
+
       <h3 className="text-center">Login</h3>
       <hr />
       <div className="row justify-content-center">
