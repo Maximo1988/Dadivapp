@@ -35,13 +35,13 @@ def get_user():
 
 #actualizar un usuario
 @api.route('/user', methods=['PUT'])
+@jwt_required()
 def update_user ():
     body= request.get_json()
     if  body is None :
         raise APIException("tienes que enviar informacion en el body",status_code=400)
-    if 'current_email' not in body :
-        raise APIException("tienes que enviar un correo del usuario que deseas actualizar actualizar",status_code=400)    
-    user=User.query.filter_by(email=body['current_email']).first()
+    current_email = get_jwt_identity()    
+    user=User.query.filter_by(email=current_email).first()
     if user is None:
         raise APIException("El usuario no existe",status_code=400)
     if 'role'  in body:
@@ -58,19 +58,21 @@ def update_user ():
         user.document=body['document']
     if 'paypal_link' in body :
         user.paypal_link=body['paypal_link']
+    if 'email' in body :
+        user.email=body['email']
 
     db.session.commit()
     return jsonify(user.serialize()),200
 
 #eliminar un usuario
 @api.route('/user', methods=['DELETE'])
+@jwt_required()
 def delete_user():
     body= request.get_json()
     if body is None:
         raise APIException("Tines que enviar informacion en el body",status_code=400)
-    if 'email' not in body:
-        raise APIException("Tienes que enviar el correo del usuario que deseas eliminar",status_code=400)
-    user=User.query.filter_by(email=body['email']).first()
+    email = get_jwt_identity()
+    user=User.query.filter_by(email=email).first()
     if user is None:
         raise APIException("El usuario no se encontró",status_code=400)
     user.is_active=False
@@ -79,6 +81,7 @@ def delete_user():
 
 # crear un nuevo proyecto
 @api.route('/projects', methods=['POST'])
+@jwt_required()
 def post_project():
     body=request.get_json()
     if body is None:
@@ -87,26 +90,29 @@ def post_project():
         raise APIException("Tienes que ingresar el nombre del proyecto")
     if 'date_finish' not in body:
         raise APIException("La fecha de finalización no se ha indicado")
-    if 'id_beneficiary' not in body:
-        raise APIException("Tienes que ingresar el ID del beneficiario")
+    
     if 'description' not in body:
         raise APIException("Tienes que ingresar la descripción del proyecto")
     if 'donative_amount' not in body:
         raise APIException("Falta ingresar un monto a donar")
 
-    user=User.query.get(body['id_beneficiary'])
+    email = get_jwt_identity()
+    user=User.query.filter_by(email=email).first()
     if user is None:
         raise APIException("El usuario beneficiario no existe")
 
-    add_project=Projects(name=body['name'], date_finish=body['date_finish'], id_beneficiary=body['id_beneficiary'], description=body['description'], donative_amount=body['donative_amount'], is_active=True)
+    add_project=Projects(name=body['name'], date_finish=body['date_finish'], id_beneficiary=user.id, description=body['description'], donative_amount=body['donative_amount'], is_active=True)
     db.session.add(add_project)
     db.session.commit()
     return jsonify(add_project.serialize()),200
     
 # eliminar un proyecto
 @api.route('/projects/', methods=['DELETE'])
+@jwt_required()
 def delete_project():
     body= request.get_json()
+    email = get_jwt_identity()
+    user=User.query.filter_by(email=email).first()
     if body is None:
         raise APIException("Tienes que agregar el proyecto a eliminar en el body", status_code=400)
     if 'id' not in body:
@@ -114,6 +120,10 @@ def delete_project():
     delete_projects= Projects.query.get(body['id'])
     if delete_projects is None:
         raise APIException("El proyecto que quieres eliminar no ha sido encontrado", status_code=400)
+    id_usuario=user.id
+    if id_usuario != delete_projects.id_beneficiary:
+        raise APIException("Este proyecto no corresponde a este usuario", status_code=400)
+    
     delete_projects.is_active=False
     db.session.commit()
     return jsonify(delete_projects.serialize()),200

@@ -65,7 +65,7 @@ def sitemap():
         return generate_sitemap(app)
     return send_from_directory(static_file_dir, 'index.html')
 
-@app.route('/api/User', methods=['POST'])
+@app.route('/api/user', methods=['POST'])
 def new_user():
     if request.json is None:
         raise APIException("Se debe de enviar informacion en el body del request", status_code=400)
