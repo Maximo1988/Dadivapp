@@ -42,8 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      getDataUser: async () => {
-        const token = localStorage.getItem("token") || "";
+      getDataUser: async (token) => {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${token}`);

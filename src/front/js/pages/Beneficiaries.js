@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 // import "./../../styles/benprofile.css";
 import PropTypes from "prop-types";
 
@@ -7,8 +7,13 @@ import { Profile } from "../component/Profile";
 import { Projects } from "../component/Projects";
 import { NewProject } from "../component/NewProject";
 
-export const Beneficiaries = (props) => {
+export const Beneficiaries = () => {
+  const { store, actions } = useContext(Context);
   const [page, setPage] = React.useState("profile");
+  useEffect(() => {
+    actions.getDataUser(store.token);
+  }, []);
+  console.log(store.token)
 
   return (
     <div className="container">
@@ -21,9 +26,9 @@ export const Beneficiaries = (props) => {
           />
           <div className="card-body text-center">
             <h5 className="card-title">
-              {props.firstName} {props.lastName}
+              {store.dataUser?.first_name} {store.dataUser?.last_name}
             </h5>
-            <p className="card-text">{props.role}</p>
+            <p className="card-text">{store.dataUser?.role ===1 ? "Donador":"Beneficiario"}</p>
           </div>{" "}
         </div>
       </header>

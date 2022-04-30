@@ -1,8 +1,9 @@
-import React from "react";
+import React,{useContext} from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 
 export const Profile = (props) => {
+  const { store, actions } = useContext(Context);
   const [modoEdicion, setModoEdicion] = React.useState(false);
 
   const editar = () => {
@@ -25,7 +26,7 @@ export const Profile = (props) => {
               className="form-control-plaintext"
               id="staticEmail"
               disabled={modoEdicion ? false : true}
-              value={props.email}
+              value={store.dataUser?.email}
             />
           </div>
           <div className="form-group row">
@@ -37,7 +38,7 @@ export const Profile = (props) => {
                 className="form-control-plaintext"
                 id="staticEmail"
                 disabled={true}
-                value={props.firstName}
+                value={store.dataUser?.first_name}
               />
             </div>
           </div>
@@ -50,7 +51,7 @@ export const Profile = (props) => {
                 className="form-control-plaintext"
                 id="staticEmail"
                 disabled={true}
-                value={props.lastName}
+                value={store.dataUser?.last_name}
               />
             </div>
           </div>
@@ -63,7 +64,7 @@ export const Profile = (props) => {
                 className="form-control-plaintext"
                 id="staticEmail"
                 disabled={true}
-                value={props.addres}
+                value={store.dataUser?.address}
               />
             </div>
           </div>
@@ -76,7 +77,7 @@ export const Profile = (props) => {
                 className="form-control-plaintext"
                 id="staticEmail"
                 disabled={true}
-                value={props.phone}
+                value={store.dataUser?.phone}
               />
             </div>
           </div>
@@ -89,7 +90,7 @@ export const Profile = (props) => {
                 className="form-control-plaintext"
                 id="staticEmail"
                 disabled={true}
-                value={props.document}
+                value={store.dataUser?.document}
               />
             </div>
           </div>
@@ -102,7 +103,7 @@ export const Profile = (props) => {
                 className="form-control-plaintext"
                 id="staticEmail"
                 disabled={true}
-                value={props.paypalLink}
+                value={store.dataUser?.paypal_link}
               />
             </div>
           </div>
