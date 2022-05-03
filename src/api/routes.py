@@ -155,6 +155,20 @@ def put_project(project_id):
     db.session.commit()
     return jsonify(put_project.serialize()), 200
 
+#proyectos por beneficiario
+@api.route('/projects', methods=['GET'])
+@jwt_required()
+def get_projects_by_user():
+    email = get_jwt_identity()
+    user=User.query.filter_by(email=email).first()
+    if user is None:
+        raise APIException("No existe el usuario")
+    get_projects_by_user = Projects.query.filter_by(id_beneficiary = user.id)
+    print(get_projects_by_user)
+    projects_serialize=list(map(lambda project : project.serialize(), get_projects_by_user))
+    return jsonify(projects_serialize), 200
+
+
 @api.route('/donaciones', methods=['GET'])
 @jwt_required()
 def get_donaciones():
