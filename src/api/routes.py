@@ -130,11 +130,14 @@ def delete_project():
 
 # actualizar un proyecto
 @api.route('/projects/<int:project_id>', methods=['PUT'])
+@jwt_required()
 def put_project(project_id):
     put_project = Projects.query.get(project_id)
-    if put_project is None:
-        raise APIException("El proyecto no existe", status_code=404)
-    body=request.get_json()
+    email = get_jwt_identity() 
+    user=User.query.filter_by(email=email).first()
+    body= request.get_json()
+    if put_project.id_beneficiary != user.id :
+        raise APIException("Este proyecto no te pertenece")
     if body is None:
         raise APIException("Proyecto no existe en el body")
     if "name" in body:
