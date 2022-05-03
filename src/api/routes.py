@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Projects
+from api.models import db, User, Projects, Donations
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
@@ -100,6 +100,8 @@ def post_project():
     user=User.query.filter_by(email=email).first()
     if user is None:
         raise APIException("El usuario beneficiario no existe")
+    if user.role == 1:
+        raise APIException("No es beneficiario")
 
     add_project=Projects(name=body['name'], date_finish=body['date_finish'], id_beneficiary=user.id, description=body['description'], donative_amount=body['donative_amount'], is_active=True)
     db.session.add(add_project)
@@ -150,3 +152,33 @@ def put_project(project_id):
     db.session.commit()
     return jsonify(put_project.serialize()), 200
 
+@api.route('/donaciones', methods=['GET'])
+@jwt_required()
+def get_donaciones():
+    email = get_jwt_identity()
+    user=User.query.filter_by(email=email).first()
+    if user is None: 
+        raise APIException("No existe el usuario")
+    donations=Donations.query.filter_by(id_user=user.id)
+    donations_serialize=list(map(lambda donation : donation.serialize(), donations))
+    return jsonify(donations_serialize), 200
+
+@api.route('/donaciones', methods=['POST'])
+@jwt_required()
+def post_donations():
+    email = get_jwt_identity()
+    user=User.query.filter_by(email=email).first()
+    if user is None: 
+        raise APIException("No existe el usuario")
+    if user.role == 2:
+        raise APIException("No es donador")
+    body=request.get_json()
+    if "id_projects" not in body:
+        raise APIException("Debes elegir un proyecto")
+    if "amount_donated" not in body:
+        raise APIException("Debes colocar un monto")
+
+    add_donation=Donations(id_projects=body['id_projects'], amount_donated=body['amount_donated'], id_user=user.id)
+    db.session.add(add_donation)
+    db.session.commit()
+    return jsonify(add_donation.serialize()), 200
