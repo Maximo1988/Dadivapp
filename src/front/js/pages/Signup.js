@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Context } from "../store/appContext";
 
 export const Signup = () => {
-  const [email, setEmail] = React.useState("");
-  const [pass, setPass] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [address, setAddress] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [document, setDocument] = React.useState("");
-  const [paypalLink, setPaypalLink] = React.useState("");
+  const { store, actions } = useContext(Context);
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [document, setDocument] = useState("");
+  const [country, setCountry] = useState("");
+  const [role, setRole] = useState(1);
+  const [paypalLink, setPaypalLink] = useState("");
 
-  const [error, setError] = React.useState(null);
+  const [error, setError] = useState(null);
 
   const procesarDatos = (e) => {
     e.preventDefault();
@@ -23,6 +28,8 @@ export const Signup = () => {
       !address.trim() ||
       !phone.trim() ||
       !document.trim() ||
+      !country.trim() ||
+      !role.trim() ||
       !paypalLink.trim()
     ) {
       setError("Completar todos los datos!");
@@ -45,6 +52,24 @@ export const Signup = () => {
       return false;
     }
     setError(null);
+
+    try {
+      actions.signup(
+        email,
+        pass,
+        firstName,
+        lastName,
+        address,
+        phone,
+        document,
+        country,
+        role,
+        paypalLink
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    return <Redirect to="/login" />;
   };
 
   return (
@@ -94,6 +119,14 @@ export const Signup = () => {
               onChange={(e) => setAddress(e.target.value)}
               value={address}
             />
+            <label className="mb-2">Country</label>
+            <input
+              type="text"
+              className="form-control mb-2"
+              placeholder="Country"
+              onChange={(e) => setCountry(e.target.value)}
+              value={country}
+            />
             <label className="mb-2">Phone</label>
             <input
               type="text"
@@ -124,8 +157,9 @@ export const Signup = () => {
                 type="radio"
                 name="exampleRadios"
                 id="exampleRadios1"
-                value="option1"
+                value={1}
                 defaultChecked
+                onChange={(e) => setRole(e.target.value)}
               />
               <label className="form-check-label" forhtml="exampleRadios1">
                 Beneficiario
@@ -137,7 +171,8 @@ export const Signup = () => {
                 type="radio"
                 name="exampleRadios"
                 id="exampleRadios2"
-                value="option2"
+                value={2}
+                onChange={(e) => setRole(e.target.value)}
               />
               <label className="form-check-label" forhtml="exampleRadios1">
                 Donador
