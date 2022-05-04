@@ -101,7 +101,7 @@ def new_user():
         raise APIException("Falta ingresar el rol", status_code=400)
     if paypal_link is None:
         raise APIException("Falta ingresar el link de paypal", status_code=400)
-    user2=User.query.filter_by(email=email).first()
+    user2=User.query.filter_by(email=email.lower()).first()
     if user2 != None:
         raise APIException("El email ya existe")
     users=User.query.filter_by(paypal_link=paypal_link).first()
@@ -115,11 +115,12 @@ def new_user():
     pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
     
 
-    new_users= User(first_name=first_name, last_name=last_name, email=email, address=address, password=pw_hash,
+    new_users= User(first_name=first_name, last_name=last_name, email=email.lower(), address=address, password=pw_hash,
                     phone=phone, document=document, country=country, role=role, paypal_link=paypal_link, is_active=True)
     db.session.add(new_users)
     db.session.commit()
     return jsonify(new_users.serialize()), 200
+
 @app.route('/api/login',methods=['POST'])
 def login():
     if request.json is None:
@@ -127,7 +128,7 @@ def login():
     email= request.json.get("email",None)
     password= request.json.get("password",None)
     if email is None:
-        raise APIException("Tienes que enviar el email de la pesona",status_code=400)
+        raise APIException("Tienes que enviar el email de la persona",status_code=400)
     if password is None:
         raise APIException("Tienes que enviar la contraseña del correo",status_code=400)
     user=User.query.filter_by(email=email).first()

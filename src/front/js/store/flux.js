@@ -60,6 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             process.env.BACKEND_URL + "/donaciones",
             requestOptions
           );
+
           const data = await response.json();
           setStore({ dataDonaciones: data });
           console.log(data);
