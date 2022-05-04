@@ -139,7 +139,7 @@ def login():
     if is_valid_user is False:
         raise APIException("El usuario o la contraseña no son correctas",status_code=400)
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token, role=user.role)
 
 
 # any other endpoint will try to serve it like a static file
