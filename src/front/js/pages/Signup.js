@@ -1,10 +1,13 @@
 import React, { useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Context } from "../store/appContext";
 
 export const Signup = () => {
   const { store, actions } = useContext(Context);
+
+  let history = useHistory();
+
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -29,7 +32,7 @@ export const Signup = () => {
       !phone.trim() ||
       !document.trim() ||
       !country.trim() ||
-      !role.trim() ||
+      !role ||
       !paypalLink.trim()
     ) {
       setError("Completar todos los datos!");
@@ -53,8 +56,8 @@ export const Signup = () => {
     }
     setError(null);
 
-    try {
-      actions.signup(
+    actions
+      .signup(
         email,
         pass,
         firstName,
@@ -65,11 +68,15 @@ export const Signup = () => {
         country,
         role,
         paypalLink
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    return <Redirect to="/login" />;
+      )
+      .then(() => {
+        if (store.signupOK) {
+          Swal.fire("Singup Error", "Click the button", "error");
+        } else {
+          Swal.fire("Singup OK", "Click the button", "success");
+          history.push("/");
+        }
+      });
   };
 
   return (

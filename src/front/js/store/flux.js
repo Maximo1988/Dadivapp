@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       dataUser: [],
       token: "",
+      signupOK: "",
     },
     actions: {
       signup: async (
@@ -51,6 +52,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           const data = await response.json();
+          if (data?.message) {
+            setStore({ signupOK: data.message });
+          }
 
           console.log(data);
         } catch (e) {
