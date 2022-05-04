@@ -101,12 +101,16 @@ def new_user():
         raise APIException("Falta ingresar el rol", status_code=400)
     if paypal_link is None:
         raise APIException("Falta ingresar el link de paypal", status_code=400)
+    user2=User.query.filter_by(email=email).first()
+    if user2 != None:
+        raise APIException("El email ya existe")
     users=User.query.filter_by(paypal_link=paypal_link).first()
     if users != None:
         raise APIException("El link de paypal ya existe")
     users1=User.query.filter_by(phone=phone).first()
     if users1 != None:
         raise APIException("El telefono ya existe, intenta agregar el codigo internacional")
+
 
     pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
     

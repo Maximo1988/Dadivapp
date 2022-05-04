@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       dataUser: [],
       token: "",
+      dataDonaciones: [],
     },
     actions: {
       login: async (email, password) => {
@@ -38,6 +39,31 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ token: data.access_token });
         } catch (e) {
           // Swal.fire(e.msg, "Click the button", "error");
+          console.error(`error from database -- ${e}`);
+        }
+      },
+
+      getDonations: async () => {
+        const token = localStorage.getItem("token") || "";
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        let requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/donaciones",
+            requestOptions
+          );
+          const data = await response.json();
+          setStore({ dataDonaciones: data });
+          console.log(data);
+        } catch (e) {
           console.error(`error from database -- ${e}`);
         }
       },
