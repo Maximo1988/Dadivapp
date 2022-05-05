@@ -201,7 +201,7 @@ def post_donations():
     user=User.query.filter_by(email=email).first()
     if user is None: 
         raise APIException("No existe el usuario")
-    if user.role == 2:
+    if user.role == 1:
         raise APIException("No es donador")
     body=request.get_json()
     if "id_projects" not in body:
