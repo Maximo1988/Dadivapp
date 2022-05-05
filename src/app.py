@@ -65,7 +65,7 @@ def sitemap():
         return generate_sitemap(app)
     return send_from_directory(static_file_dir, 'index.html')
 
-@app.route('/api/User', methods=['POST'])
+@app.route('/api/user', methods=['POST'])
 def new_user():
     if request.json is None:
         raise APIException("Se debe de enviar informacion en el body del request", status_code=400)
@@ -101,15 +101,26 @@ def new_user():
         raise APIException("Falta ingresar el rol", status_code=400)
     if paypal_link is None:
         raise APIException("Falta ingresar el link de paypal", status_code=400)
+    user2=User.query.filter_by(email=email.lower()).first()
+    if user2 != None:
+        raise APIException("El email ya existe")
+    users=User.query.filter_by(paypal_link=paypal_link).first()
+    if users != None:
+        raise APIException("El link de paypal ya existe")
+    users1=User.query.filter_by(phone=phone).first()
+    if users1 != None:
+        raise APIException("El telefono ya existe, intenta agregar el codigo internacional")
+
 
     pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
     
 
-    new_users= User(first_name=first_name, last_name=last_name, email=email, address=address, password=pw_hash,
+    new_users= User(first_name=first_name, last_name=last_name, email=email.lower(), address=address, password=pw_hash,
                     phone=phone, document=document, country=country, role=role, paypal_link=paypal_link, is_active=True)
     db.session.add(new_users)
     db.session.commit()
     return jsonify(new_users.serialize()), 200
+
 @app.route('/api/login',methods=['POST'])
 def login():
     if request.json is None:
@@ -117,7 +128,7 @@ def login():
     email= request.json.get("email",None)
     password= request.json.get("password",None)
     if email is None:
-        raise APIException("Tienes que enviar el email de la pesona",status_code=400)
+        raise APIException("Tienes que enviar el email de la persona",status_code=400)
     if password is None:
         raise APIException("Tienes que enviar la contraseña del correo",status_code=400)
     user=User.query.filter_by(email=email).first()
@@ -128,7 +139,7 @@ def login():
     if is_valid_user is False:
         raise APIException("El usuario o la contraseña no son correctas",status_code=400)
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token, role=user.role)
 
 
 # any other endpoint will try to serve it like a static file
