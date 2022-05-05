@@ -1,14 +1,69 @@
 import Swal from "sweetalert2";
 import { Redirect } from "react-router-dom";
+import { resolveConfig } from "prettier";
 
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       dataUser: [],
       token: "",
+      signupOK: "",
       dataDonaciones: [],
     },
     actions: {
+      signup: async (
+        email,
+        pass,
+        firstName,
+        lastName,
+        address,
+        phone,
+        document,
+        country,
+        role,
+        paypalLink
+      ) => {
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        let raw = JSON.stringify({
+          email: email,
+          password: pass,
+          first_name: firstName,
+          last_name: lastName,
+          address: address,
+          phone: phone,
+          document: document,
+          country: country,
+          role: role,
+          paypal_link: paypalLink,
+        });
+
+        let requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/user",
+            requestOptions
+          );
+
+          const data = await response.json();
+          if (data?.message) {
+            setStore({ signupOK: data.message });
+          } else {
+            setStore({ signupOK: "" });
+          }
+
+          console.log(data);
+        } catch (e) {
+          console.error(`error from database -- ${e}`);
+        }
+      },
       login: async (email, password) => {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -33,12 +88,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const data = await response.json();
 
-          console.log(data);
           localStorage.setItem("token", data.access_token);
-          // Swal.fire("Login OK", "Click the button", "success");
           setStore({ token: data.access_token });
         } catch (e) {
-          // Swal.fire(e.msg, "Click the button", "error");
           console.error(`error from database -- ${e}`);
         }
       },
@@ -90,7 +142,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           setStore({ dataUser: data });
-          console.log(data);
         } catch (e) {
           removeToken();
           Swal.fire(e.msg, "Click the button", "error");
