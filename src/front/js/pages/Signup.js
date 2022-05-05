@@ -71,7 +71,7 @@ export const Signup = () => {
       )
       .then(() => {
         if (store.signupOK) {
-          Swal.fire("Singup Error", "Click the button", "error");
+          Swal.fire("Singup Error", `${store.signupOK}`, "error");
         } else {
           Swal.fire("Singup OK", "Click the button", "success");
           history.push("/");

@@ -55,6 +55,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
           if (data?.message) {
             setStore({ signupOK: data.message });
+          } else {
+            setStore({ signupOK: "" });
           }
 
           console.log(data);
