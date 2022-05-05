@@ -100,7 +100,7 @@ def post_project():
     user=User.query.filter_by(email=email).first()
     if user is None:
         raise APIException("El usuario beneficiario no existe")
-    if user.role == 1:
+    if user.role == 2:
         raise APIException("No es beneficiario")
 
     add_project=Projects(name=body['name'], date_finish=body['date_finish'], id_beneficiary=user.id, description=body['description'], donative_amount=body['donative_amount'], is_active=True)
@@ -164,7 +164,7 @@ def get_proyectos():
     user=User.query.filter_by(email=email).first()
     if user is None: 
         raise APIException("No existe el usuario")
-    if user.role == 2:
+    if user.role == 1:
         raise APIException("No es donador")
     projects=Projects.query.all()
     projects_serialize=list(map(lambda project : project.serialize(), projects))
