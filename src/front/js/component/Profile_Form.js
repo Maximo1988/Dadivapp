@@ -2,7 +2,7 @@ import React,{useContext} from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 
-export const Profile = (props) => {
+export const Profile_Form = (props) => {
   const { store, actions } = useContext(Context);
   const [modoEdicion, setModoEdicion] = React.useState(false);
 
@@ -15,11 +15,11 @@ export const Profile = (props) => {
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center ">
       <form>
-        <div className="form-group row">
+        <div className="form-group row d-flex justify-content-center ">
           <label className="col-sm-2 col-form-label">Email</label>
-          <div className="col-sm-10">
+          <div className="col-sm-6">
             <input
               type="text"
               readOnly
@@ -29,9 +29,9 @@ export const Profile = (props) => {
               value={store.dataUser?.email}
             />
           </div>
-          <div className="form-group row">
+          <div className="form-group row d-flex justify-content-center">
             <label className="col-sm-2 col-form-label">First Name</label>
-            <div className="col-sm-10">
+            <div className="col-sm-6">
               <input
                 type="text"
                 readOnly
@@ -42,9 +42,9 @@ export const Profile = (props) => {
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row d-flex justify-content-center">
             <label className="col-sm-2 col-form-label">Last Name</label>
-            <div className="col-sm-10">
+            <div className="col-sm-6">
               <input
                 type="text"
                 readOnly
@@ -55,9 +55,9 @@ export const Profile = (props) => {
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row d-flex justify-content-center">
             <label className="col-sm-2 col-form-label">Address</label>
-            <div className="col-sm-10">
+            <div className="col-sm-6">
               <input
                 type="text"
                 readOnly
@@ -65,12 +65,13 @@ export const Profile = (props) => {
                 id="staticEmail"
                 disabled={true}
                 value={store.dataUser?.address}
+                
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row d-flex justify-content-center">
             <label className="col-sm-2 col-form-label">Phone</label>
-            <div className="col-sm-10">
+            <div className="col-sm-6">
               <input
                 type="text"
                 readOnly
@@ -81,9 +82,9 @@ export const Profile = (props) => {
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row d-flex justify-content-center">
             <label className="col-sm-2 col-form-label">Document</label>
-            <div className="col-sm-10">
+            <div className="col-sm-6">
               <input
                 type="text"
                 readOnly
@@ -94,9 +95,9 @@ export const Profile = (props) => {
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group row d-flex justify-content-center ">
             <label className="col-sm-2 col-form-label">Paypal Link</label>
-            <div className="col-sm-10">
+            <div className="col-sm-6">
               <input
                 type="text"
                 readOnly

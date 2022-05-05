@@ -3,17 +3,15 @@ import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { Context } from "../store/appContext";
-import { Profile } from "../component/Profile";
 import { Projects } from "../component/Projects";
 import { NewProject } from "../component/NewProject";
 
 export const Beneficiaries = () => {
   const { store, actions } = useContext(Context);
-  const [page, setPage] = React.useState("profile");
+  const [page, setPage] = React.useState("projects");
   useEffect(() => {
     actions.getDataUser(store.token);
   }, []);
-  console.log(store.token)
 
   return (
     <div className="container">
@@ -33,9 +31,6 @@ export const Beneficiaries = () => {
         </div>
       </header>
       <div className="d-flex justify-content-around">
-        <button className="btn btn-primary" onClick={() => setPage("profile")}>
-          Profile
-        </button>
         <button className="btn btn-primary" onClick={() => setPage("projects")}>
           Projects
         </button>
@@ -48,7 +43,6 @@ export const Beneficiaries = () => {
       </div>
       <hr />
       <div className="mt-3">
-        {page == "profile" ? <Profile /> : null}
         {page == "projects" ? <Projects /> : null}
         {page == "NewProject" ? <NewProject /> : null}
       </div>
