@@ -1,6 +1,5 @@
 import Swal from "sweetalert2";
 import { Redirect } from "react-router-dom";
-import { resolveConfig } from "prettier";
 
 const getState = ({ getStore, getActions, setStore }) => {
   return {

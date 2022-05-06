@@ -88,6 +88,7 @@ class Donations(db.Model):
     id_user= db.Column(db.Integer,db.ForeignKey('User.id'),nullable=False)
     user_relations= relationship(User,primaryjoin=id_user==User.id)
     amount_donated= db.Column(db.Integer,  nullable=False)
+    date_start= db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow() )
     
     def __repr__(self):
         return f'<Donations {self.id} name {self.name}>'
@@ -98,6 +99,7 @@ class Donations(db.Model):
             "id_projects": self.id_projects,
             "id_user": self.id_user,
             "amount_donated": self.amount_donated,
+            "date_start": self.date_start,
            
 
             # do not serialize the password, its a security breach
