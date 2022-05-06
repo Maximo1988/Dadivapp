@@ -76,7 +76,8 @@ class Projects(db.Model):
             "name": self.name,
             "date_start": self.date_start,
             "date_finish": self.date_finish,
-            "id_beneficiary": self.id_beneficiary
+            "id_beneficiary": self.id_beneficiary,
+            "donative_amount": self.donative_amount
 
             # do not serialize the password, its a security breach
         }
