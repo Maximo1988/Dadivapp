@@ -11,7 +11,7 @@ import { Beneficiaries } from "./pages/Beneficiaries";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { Donadores } from "./pages/Donadores";
-
+import { Profile } from "./pages/Profile";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -29,6 +29,9 @@ const Layout = () => {
             </Route>
             <Route exact path="/beneficiaries">
               <Beneficiaries />
+            </Route>
+            <Route exact path="/profile">
+            <Profile/>
             </Route>
             <Route exact path="/login">
               <Login />

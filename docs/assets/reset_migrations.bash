@@ -5,3 +5,6 @@ psql -U gitpod -c 'CREATE DATABASE example;' &&
 psql -U gitpod -c 'CREATE EXTENSION unaccent;' -d example &&
 pipenv run migrate &&
 pipenv run upgrade
+psql postgresql://gitpod/example << EOF
+    INSERT INTO "Role"("name") VALUES ('Beneficiario'),('Donador');
+EOF

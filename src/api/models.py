@@ -26,7 +26,7 @@ class User(db.Model):
     first_name= db.Column(db.String(80),nullable=False )
     last_name= db.Column(db.String(80),nullable=False )
     address= db.Column(db.String(80),nullable=False)
-    password= db.Column(db.String(64), unique=True, nullable=False)
+    password= db.Column(db.String(64), unique=False, nullable=False)
     phone= db.Column(db.String(20), unique=True, nullable=False)
     document= db.Column(db.String(80), nullable=False)
     country= db.Column(db.String(30), nullable=False)
