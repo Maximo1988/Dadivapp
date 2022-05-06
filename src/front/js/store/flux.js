@@ -6,6 +6,9 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       dataUser: [],
       token: "",
+      projects_all: [],
+      Projects_benef: [],
+      Projects_create: []
     },
     actions: {
       login: async (email, password) => {
@@ -70,6 +73,91 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(`error from database -- ${e}`);
         }
       },
+      Projects_all: async () => {
+        const token = localStorage.getItem("token") || "";
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        let requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/proyectos_all",
+            requestOptions
+          );
+
+          const data = await response.json()
+          setStore({ projects_all: data })
+
+          console.log(data)
+        } catch (e) {
+          console.error(`error from database -- ${e}`)
+        }
+      },
+
+      Projects_benef: async () => {
+        const token = localStorage.getItem("token") || "";
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        let requestOptions = {
+          method: "GET",
+          headers: myHeaders
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/projects",
+            requestOptions
+          );
+
+          const data = await response.json()
+          setStore({ Projects_benef: data })
+
+          console.log(data)
+        } catch (e) {
+          console.error(`error from database -- ${e}`)
+        }
+      },
+
+      Projects_create: async (name, date_finish, description, donative_amount) => {
+        const token = localStorage.getItem("token") || "";
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        let raw = JSON.stringify({
+          name: name,
+          date_finish: date_finish,
+          description: description,
+          donative_amount: donative_amount
+        });
+
+        let requestOptions = {
+          method: "POST",
+          body: raw,
+          headers: myHeaders
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/projects",
+            requestOptions
+          );
+
+          const data = await response.json()
+          setStore({ Projects_create: data })
+
+          console.log(data)
+        } catch (e) {
+          console.error(`error from database -- ${e}`)
+        }
+      }
     },
 
     removeToken: () => {
