@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: "",
       signupOK: "",
       dataDonaciones: [],
+      postDonaciones: [],
     },
     actions: {
       signup: async (
@@ -109,13 +110,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/donaciones",
+            process.env.BACKEND_URL + "/api/donaciones",
             requestOptions
           );
 
           const data = await response.json();
           setStore({ dataDonaciones: data });
           console.log(data);
+        } catch (e) {
+          console.error(`error from database -- ${e}`);
+        }
+      },
+
+      postDonations: async (id_project, amount_donated) => {
+        const token = localStorage.getItem("token") || "";
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        let raw = JSON.stringify({
+          id_projects: id_project,
+          amount_donated: amount_donated,
+        });
+
+        let requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+        console.log(raw);
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/donaciones",
+            requestOptions
+          );
+
+          const data = await response.json();
+
+          setStore({ postDonaciones: data });
         } catch (e) {
           console.error(`error from database -- ${e}`);
         }
@@ -143,8 +176,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           setStore({ dataUser: data });
         } catch (e) {
-          removeToken();
-          Swal.fire(e.msg, "Click the button", "error");
           console.error(`error from database -- ${e}`);
         }
       },

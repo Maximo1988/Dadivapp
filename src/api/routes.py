@@ -208,6 +208,9 @@ def post_donations():
         raise APIException("Debes elegir un proyecto")
     if "amount_donated" not in body:
         raise APIException("Debes colocar un monto")
+    id_projects=Projects.query.get(body["id_projects"])
+    if id_projects is None:
+        raise APIException("Este proyecto no existe")
 
     add_donation=Donations(id_projects=body['id_projects'], amount_donated=body['amount_donated'], id_user=user.id)
     db.session.add(add_donation)
