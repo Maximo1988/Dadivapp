@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext} from "react";
 import CardInfo from "../component/cardInfo";
 import ListDonations from "../component/listDonations";
-
+import {Context }from "../store/appContext"
 export const Donadores = () => {
+  const { store, actions } = useContext(Context);
   const [cantidad, setCantidad] = useState(false);
   const [donationsList, setDonationsList] = useState(false);
+  useEffect(() => {
+    actions.getDonations();
+  }, []);
   return (
     <div className="container">
       <div className="text-center text-info pt-5 pb-5">
@@ -43,12 +47,14 @@ export const Donadores = () => {
                   ocultar total Donado
                 </button>
               )}
-              
             </div>
             <div className="col-4 d-flex flex-column justify-content-center ">
               <h5 className="card-title text-center">Donations</h5>
               {donationsList === true ? (
-                <div class="list-group mb-3"><ListDonations />  </div>
+                <div class="list-group mb-3">{store.dataDonaciones.length===0 ?<h5>Todavia no haz hecho una donacion</h5> : store.dataDonaciones.map((Donation,index)=>{
+                  return (<ListDonations key={index} projectsTiltle={Donation.id_projects} date={""} description={""}  amountAcount={donationsList.amount_donated}/>)
+                })}
+                </div>
               ) : (
                 ""
               )}
