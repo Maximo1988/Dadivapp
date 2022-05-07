@@ -28,7 +28,7 @@ export const Navbar = () => {
             <Link className="btn text-light bg-info m-2" to="/Profile">
               <b>Profile</b>
             </Link>
-           {store.dataUser?.role===2?
+           {store.dataUser?.role===1?
             <Link className="btn text-light bg-info m-2" to="/beneficiaries">
               <b>Beneficiaries</b>
             </Link>:null}
