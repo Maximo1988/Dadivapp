@@ -26,7 +26,7 @@ export const CardContainer = (props) => {
               onClick={() => setStatusCard(true)}
               className="btn btn-info text-white"
             >
-              Read More
+              Leer más
             </button>
           ) : (
             ""
@@ -36,7 +36,7 @@ export const CardContainer = (props) => {
               onClick={() => setStatusCard(false)}
               className="btn btn-info text-white"
             >
-              Read Less
+              Leer menos
             </button>
           ) : (
             ""
@@ -58,7 +58,9 @@ export const CardContainer = (props) => {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Donate
+
+                Donar
+
               </button>
               <div className={menuClass} aria-labelledby="dropdownMenuButton ">
                 <ul className="text-info bg-white">
@@ -73,7 +75,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
-                      Donate $1000
+
+                      Donar $1000
+
                     </label>
                   </div>
                   <div className="custom-control custom-radio">
@@ -87,7 +91,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
-                      Donate $1500
+
+                      Donar $1500
+
                     </label>
                   </div>
                   <div className="custom-control custom-radio">
@@ -101,7 +107,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
-                      Donate $2000
+
+                      Donar $2000
+
                     </label>
                   </div>
                   <div className="custom-control custom-radio">
@@ -115,7 +123,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
-                      Donate $2500
+
+                      Donar $2500
+
                     </label>
                   </div>
                   <div className="custom-control custom-radio">
@@ -129,7 +139,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
-                      Donate $2500
+
+                      Donar $2500
+
                     </label>
                   </div>
                 </ul>
@@ -138,10 +150,10 @@ export const CardContainer = (props) => {
           )}
         </div>
         <footer className="blockquote-footer">
-          <cite title="Source Title">dd/mm/year</cite>
+          <cite title="Source Title">dd/mm/año</cite>
         </footer>
         <footer className="blockquote-footer">
-          <cite title="Source Title">dd/mm/year</cite>
+          <cite title="Source Title">dd/mm/año</cite>
         </footer>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 export const Navbar = () => {
@@ -14,26 +14,29 @@ export const Navbar = () => {
             <b>Dadivapp</b>
           </span>
         </Link>
-        { !store.token ? (
+        {!store.token ? (
           <div className="d-flex">
             <Link className="btn text-light bg-info m-2" to="/login">
-              <b>Login</b>
+              <b>Acceso</b>
             </Link>
             <Link className="btn text-light bg-info m-2" to="/signup">
-              <b>Sign up</b>
+              <b>Registro</b>
             </Link>
           </div>
         ) : (
           <div className="d-flex">
             <Link className="btn text-light bg-info m-2" to="/Profile">
-              <b>Profile</b>
+              <b>Perfil</b>
             </Link>
-           {store.dataUser?.role===1?
-            <Link className="btn text-light bg-info m-2" to="/beneficiaries">
-              <b>Beneficiaries</b>
-            </Link>:null}
+
+            {store.dataUser?.role === 2 ? (
+              <Link className="btn text-light bg-info m-2" to="/beneficiaries">
+                <b>Beneficiarios</b>
+              </Link>
+            ) : null}
+
             <Link className="btn text-light bg-info m-2" to="/donadores">
-              <b>Donations</b>
+              <b>Donaciones</b>
             </Link>
           </div>
         )}

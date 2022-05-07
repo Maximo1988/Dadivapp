@@ -1,8 +1,11 @@
+
 import React, { useState, useEffect,useContext} from "react";
 import CardInfo from "../component/cardInfo";
 import ListDonations from "../component/listDonations";
 import {Context }from "../store/appContext"
+
 export const Donadores = () => {
+  
   const { store, actions } = useContext(Context);
   const [cantidad, setCantidad] = useState(false);
   const [donationsList, setDonationsList] = useState(false);
@@ -10,10 +13,12 @@ export const Donadores = () => {
     actions.getDonations();
   }, []);
   return (
-    <div className="container">
+
+    <div>
       <div className="text-center text-info pt-5 pb-5">
         <h2>
-          <b>Proyectos Disponibles.</b>
+          <b>Proyectos Disponibles</b>
+
         </h2>
       </div>
       <div>
@@ -44,12 +49,12 @@ export const Donadores = () => {
                   onClick={() => setCantidad(false)}
                   className="btn btn-info text-white  ml-3"
                 >
-                  ocultar total Donado
+                  Ocultar Total Donado
                 </button>
               )}
             </div>
             <div className="col-4 d-flex flex-column justify-content-center ">
-              <h5 className="card-title text-center">Donations</h5>
+              <h5 className="card-title text-center">Donaciones</h5>
               {donationsList === true ? (
                 <div class="list-group mb-3">{store.dataDonaciones.length===0 ?<h5>Todavia no haz hecho una donacion</h5> : store.dataDonaciones.map((Donation,index)=>{
                   return (<ListDonations key={index} projectsTiltle={Donation.id_projects} date={""} description={""}  amountAcount={donationsList.amount_donated}/>)
@@ -63,14 +68,14 @@ export const Donadores = () => {
                   onClick={() => setDonationsList(true)}
                   className="btn btn-info text-white  ml-3"
                 >
-                  Open Donations List
+                  Abrir Donaciones
                 </button>
               ) : (
                 <button
                   onClick={() => setDonationsList(false)}
                   className="btn btn-info text-white  ml-3"
                 >
-                  Hidden Donations List
+                  Ocultar Donaciones
                 </button>
               )}
             </div>

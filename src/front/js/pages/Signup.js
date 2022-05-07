@@ -81,7 +81,7 @@ export const Signup = () => {
 
   return (
     <div className="mt-5">
-      <h3 className="text-center">Sign Up</h3>
+      <h3 className="text-center">Registro</h3>
       <hr />
       <div className="row justify-content-center">
         <div className="col-12 col-sm-8 col-md-6 col-xl-4">
@@ -90,63 +90,55 @@ export const Signup = () => {
             <input
               type="email"
               className="form-control mb-2"
-              placeholder="Prueba@prueba.com"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
-            <label className="mb-2">Password</label>
+            <label className="mb-2">Contraseña</label>
             <input
               type="password"
               className="form-control mb-2"
-              placeholder="******"
               onChange={(e) => setPass(e.target.value)}
               value={pass}
             />
-            <label className="mb-2">First Name</label>
+            <label className="mb-2">Nombre</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="First Name"
               onChange={(e) => setFirstName(e.target.value)}
               value={firstName}
             />
-            <label className="mb-2">Last Name</label>
+            <label className="mb-2">Apellido</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Last Name"
               onChange={(e) => setLastName(e.target.value)}
               value={lastName}
             />
-            <label className="mb-2">Address</label>
+            <label className="mb-2">Dirección</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Address"
               onChange={(e) => setAddress(e.target.value)}
               value={address}
             />
-            <label className="mb-2">Country</label>
+            <label className="mb-2">País</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Country"
               onChange={(e) => setCountry(e.target.value)}
               value={country}
             />
-            <label className="mb-2">Phone</label>
+            <label className="mb-2">Teléfono</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Phone"
               onChange={(e) => setPhone(e.target.value)}
               value={phone}
             />
-            <label className="mb-2">N° Document</label>
+            <label className="mb-2">N° Documento</label>
             <input
               type="number"
               className="form-control mb-2"
-              placeholder="N° Document"
               onChange={(e) => setDocument(e.target.value)}
               value={document}
             />
@@ -154,7 +146,6 @@ export const Signup = () => {
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Paypal Link"
               onChange={(e) => setPaypalLink(e.target.value)}
               value={paypalLink}
             />
@@ -190,7 +181,7 @@ export const Signup = () => {
               className="btn btn-lg btn-dark btn-block w-100"
               type="submit"
             >
-              Register
+              Crear Usuario
             </button>
           </form>
         </div>
