@@ -3,10 +3,10 @@ import PropType from "prop-types";
 
 export const CardContainer = (props) => {
   const [statusCard, setStatusCard] = useState(false);
-  const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(false);
 
-  let toggleOpen = () => setToggle(!toggle)
-  const menuClass = `dropdown-menu${(toggle ? " show" : "")}`
+  let toggleOpen = () => setToggle(!toggle);
+  const menuClass = `dropdown-menu${toggle ? " show" : ""}`;
 
   return (
     <div>
@@ -25,7 +25,7 @@ export const CardContainer = (props) => {
               onClick={() => setStatusCard(true)}
               className="btn btn-info text-white"
             >
-              Read More
+              Leer más
             </button>
           ) : (
             ""
@@ -35,56 +35,115 @@ export const CardContainer = (props) => {
               onClick={() => setStatusCard(false)}
               className="btn btn-info text-white"
             >
-              Read Less
+              Leer menos
             </button>
           ) : (
             ""
           )}
 
-         { props.notButtonDonate? "":<div className="dropdown myDropdown px-3" style={{ float: "right" }} onClick={() => toggleOpen()}>
-            <button
-              className="btn btn-info text-white dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false">
-              Donate
-            </button>
-            <div className={menuClass} aria-labelledby="dropdownMenuButton ">
-              <ul className="text-info bg-white">
-                <div className="custom-control custom-radio">
-                  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input"></input>
-                  <label className="custom-control-label" htmlFor="customRadio1">Donate $1000</label>
-                </div>
-                <div className="custom-control custom-radio">
-                  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input"></input>
-                  <label className="custom-control-label" htmlFor="customRadio1">Donate $1500</label>
-                </div>
-                <div className="custom-control custom-radio">
-                  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input"></input>
-                  <label className="custom-control-label"   htmlFor="customRadio1">Donate $2000</label>
-                </div>
-                <div className="custom-control custom-radio">
-                  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input"></input>
-                  <label className="custom-control-label" htmlFor="customRadio1">Donate $2500</label>
-                </div>
-                <div className="custom-control custom-radio">
-                  <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input"></input>
-                  <label className="custom-control-label" htmlFor="customRadio1">Donate $2500</label>
-                </div>
-              </ul>
+          {props.notButtonDonate ? (
+            ""
+          ) : (
+            <div
+              className="dropdown myDropdown px-3"
+              style={{ float: "right" }}
+              onClick={() => toggleOpen()}
+            >
+              <button
+                className="btn btn-info text-white dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Donar
+              </button>
+              <div className={menuClass} aria-labelledby="dropdownMenuButton ">
+                <ul className="text-info bg-white">
+                  <div className="custom-control custom-radio">
+                    <input
+                      type="radio"
+                      id="customRadio1"
+                      name="customRadio"
+                      className="custom-control-input"
+                    ></input>
+                    <label
+                      className="custom-control-label"
+                      htmlFor="customRadio1"
+                    >
+                      Donar $1000
+                    </label>
+                  </div>
+                  <div className="custom-control custom-radio">
+                    <input
+                      type="radio"
+                      id="customRadio1"
+                      name="customRadio"
+                      className="custom-control-input"
+                    ></input>
+                    <label
+                      className="custom-control-label"
+                      htmlFor="customRadio1"
+                    >
+                      Donar $1500
+                    </label>
+                  </div>
+                  <div className="custom-control custom-radio">
+                    <input
+                      type="radio"
+                      id="customRadio1"
+                      name="customRadio"
+                      className="custom-control-input"
+                    ></input>
+                    <label
+                      className="custom-control-label"
+                      htmlFor="customRadio1"
+                    >
+                      Donar $2000
+                    </label>
+                  </div>
+                  <div className="custom-control custom-radio">
+                    <input
+                      type="radio"
+                      id="customRadio1"
+                      name="customRadio"
+                      className="custom-control-input"
+                    ></input>
+                    <label
+                      className="custom-control-label"
+                      htmlFor="customRadio1"
+                    >
+                      Donar $2500
+                    </label>
+                  </div>
+                  <div className="custom-control custom-radio">
+                    <input
+                      type="radio"
+                      id="customRadio1"
+                      name="customRadio"
+                      className="custom-control-input"
+                    ></input>
+                    <label
+                      className="custom-control-label"
+                      htmlFor="customRadio1"
+                    >
+                      Donar $2500
+                    </label>
+                  </div>
+                </ul>
+              </div>
             </div>
-          </div>}
+          )}
         </div>
         <footer className="blockquote-footer">
-          <cite title="Source Title">dd/mm/year</cite>
+          <cite title="Source Title">dd/mm/año</cite>
         </footer>
         <footer className="blockquote-footer">
-          <cite title="Source Title">dd/mm/year</cite>
+          <cite title="Source Title">dd/mm/año</cite>
         </footer>
       </div>
-    </div >
+    </div>
   );
 };
 
