@@ -33,6 +33,8 @@ export const Login = () => {
     // console.log("correcto...");
     setError(null);
 
+    // setEmail(email.toLowerCase());
+    console.log(email);
     actions.login(email, pass).then(() => {
       if (store.token) {
         Swal.fire("Acceso OK", "Usuario Encontrado", "success");

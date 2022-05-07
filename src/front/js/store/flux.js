@@ -72,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         myHeaders.append("Content-Type", "application/json");
 
         let raw = JSON.stringify({
-          email: email,
+          email: email.toLowerCase(),
           password: password,
         });
 
@@ -198,12 +198,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             requestOptions
           );
 
-          const data = await response.json()
-          setStore({ projects_all: data })
+          const data = await response.json();
+          setStore({ projects_all: data });
 
-          console.log(data)
+          console.log(data);
         } catch (e) {
-          console.error(`error from database -- ${e}`)
+          console.error(`error from database -- ${e}`);
         }
       },
 
@@ -215,7 +215,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         let requestOptions = {
           method: "GET",
-          headers: myHeaders
+          headers: myHeaders,
         };
 
         try {
@@ -224,16 +224,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             requestOptions
           );
 
-          const data = await response.json()
-          setStore({ Projects_benef: data })
+          const data = await response.json();
+          setStore({ Projects_benef: data });
 
-          console.log(data)
+          console.log(data);
         } catch (e) {
-          console.error(`error from database -- ${e}`)
+          console.error(`error from database -- ${e}`);
         }
       },
 
-      Projects_create: async (name, date_finish, description, donative_amount) => {
+      Projects_create: async (
+        name,
+        date_finish,
+        description,
+        donative_amount
+      ) => {
         const token = localStorage.getItem("token") || "";
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -243,13 +248,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           name: name,
           date_finish: date_finish,
           description: description,
-          donative_amount: donative_amount
+          donative_amount: donative_amount,
         });
 
         let requestOptions = {
           method: "POST",
           body: raw,
-          headers: myHeaders
+          headers: myHeaders,
         };
 
         try {
@@ -258,14 +263,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             requestOptions
           );
 
-          const data = await response.json()
-          setStore({ Projects_create: data })
+          const data = await response.json();
+          setStore({ Projects_create: data });
 
-          console.log(data)
+          console.log(data);
         } catch (e) {
-          console.error(`error from database -- ${e}`)
+          console.error(`error from database -- ${e}`);
         }
-      }
+      },
     },
 
     removeToken: () => {

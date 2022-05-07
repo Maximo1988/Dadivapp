@@ -28,11 +28,13 @@ export const Navbar = () => {
             <Link className="btn text-light bg-info m-2" to="/Profile">
               <b>Perfil</b>
             </Link>
+
             {store.dataUser?.role === 2 ? (
               <Link className="btn text-light bg-info m-2" to="/beneficiaries">
                 <b>Beneficiarios</b>
               </Link>
             ) : null}
+
             <Link className="btn text-light bg-info m-2" to="/donadores">
               <b>Donaciones</b>
             </Link>

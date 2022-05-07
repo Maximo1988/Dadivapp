@@ -10,13 +10,14 @@ export const CardContainer = (props) => {
 
   return (
     <div>
+      <button>boton</button>
       <div className="card estilo border-info pb-3 ml-5 w-100">
-        <div className="card-header">{props.Header}</div>
+        <div className="card-header">{props.name}</div>
         <div className="card-body text-body">
-          <h5 className="card-subtitle mb-2 text-muted">{props.Info}</h5>
-          <p className="card-text">{props.Description}</p>
+          <h5 className="card-subtitle mb-2 text-muted">{props.date_finish}</h5>
+          <p className="card-text">{props.donative_amount}</p>
           {statusCard === true ? (
-            <p className="card-text">{props.extraDescription}</p>
+            <p className="card-text">{props.description}</p>
           ) : (
             ""
           )}
@@ -57,7 +58,9 @@ export const CardContainer = (props) => {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
+
                 Donar
+
               </button>
               <div className={menuClass} aria-labelledby="dropdownMenuButton ">
                 <ul className="text-info bg-white">
@@ -72,7 +75,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
+
                       Donar $1000
+
                     </label>
                   </div>
                   <div className="custom-control custom-radio">
@@ -86,7 +91,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
+
                       Donar $1500
+
                     </label>
                   </div>
                   <div className="custom-control custom-radio">
@@ -100,7 +107,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
+
                       Donar $2000
+
                     </label>
                   </div>
                   <div className="custom-control custom-radio">
@@ -114,7 +123,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
+
                       Donar $2500
+
                     </label>
                   </div>
                   <div className="custom-control custom-radio">
@@ -128,7 +139,9 @@ export const CardContainer = (props) => {
                       className="custom-control-label"
                       htmlFor="customRadio1"
                     >
+
                       Donar $2500
+
                     </label>
                   </div>
                 </ul>
