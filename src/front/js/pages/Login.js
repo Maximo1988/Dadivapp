@@ -39,7 +39,7 @@ export const Login = () => {
       if (store.token) {
         Swal.fire("Acceso OK", "Usuario Encontrado", "success");
       } else {
-        Swal.fire(e.msg, "Usuario no Registrado", "error");
+        Swal.fire(e.msg, "Usuario no Encontrado", "error");
       }
     });
   };

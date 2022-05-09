@@ -48,8 +48,8 @@ export const Signup = () => {
     }
     if (!regularExpression.test(pass)) {
       Swal.fire(
-        "password should contain atleast one number and one special character",
-        "Click the button",
+        "La contraseña debe de contener al menos un número y un caracter especial",
+        "Revisa tus datos",
         "error"
       );
       return false;
@@ -71,9 +71,9 @@ export const Signup = () => {
       )
       .then(() => {
         if (store.signupOK) {
-          Swal.fire("Singup Error", `${store.signupOK}`, "error");
+          Swal.fire("Error en Registro", `${store.signupOK}`, "error");
         } else {
-          Swal.fire("Singup OK", "Click the button", "success");
+          Swal.fire("Usuario Registrado", "¡Gracias!", "success");
           history.push("/");
         }
       });
