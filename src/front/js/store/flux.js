@@ -118,7 +118,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const data = await response.json();
           setStore({ dataDonaciones: data });
-          console.log(data);
         } catch (e) {
           console.error(`error from database -- ${e}`);
         }
@@ -181,6 +180,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(`error from database -- ${e}`);
         }
       },
+
       Projects_all: async () => {
         const token = localStorage.getItem("token") || "";
         let myHeaders = new Headers();
@@ -200,8 +200,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const data = await response.json();
           setStore({ projects_all: data });
-
-          console.log(data);
         } catch (e) {
           console.error(`error from database -- ${e}`);
         }
