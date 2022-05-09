@@ -33,7 +33,7 @@ export const Home = () => {
         </div>
       </div>
       <div className="text-center">
-        <h3 className="text-info">¿Como funciona?</h3>
+        <h3 className="text-info">¿Cómo funciona?</h3>
         <div className="row d-flex justify-content-center">
           <div className="col-sm-12 col-md-6 col-lg-4">
             <p>
@@ -46,7 +46,7 @@ export const Home = () => {
         </div>
       </div>
       <div className="text-center mt-5">
-        <h3 className="text-info">¿Que dicen de nosotros?</h3>
+        <h3 className="text-info">¿Qué dicen de nosotros?</h3>
       </div>
       <ConjuntoCards />
     </div>

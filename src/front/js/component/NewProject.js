@@ -24,47 +24,42 @@ export const NewProject = () => {
 
   return (
     <div className="mt-5">
-      <h3 className="text-center mb-3">New Proyect</h3>
+      <h3 className="text-center mb-3">Ingresa </h3>
       <div className="row justify-content-center">
         <div className="col-12 col-sm-8 col-md-6 col-xl-4">
           <form onSubmit={procesarDatos}>
-            <label className="mb-2">Project Name</label>
+            <label className="mb-2">Nombre</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Project Name"
               onChange={(e) => setProjectName(e.target.value)}
               value={projectName}
             />
-            <label className="mb-2">Start Date</label>
+            <label className="mb-2">Fecha de Inicio</label>
             <input
               type="Datetime-local"
               className="form-control mb-2"
-              placeholder="start date"
               onChange={(e) => setFechaInicio(e.target.value)}
               value={fechaInicio}
             />
-            <label className="mb-2">Final Date</label>
+            <label className="mb-2">Fecha de Finalización</label>
             <input
               type="Datetime-local"
               className="form-control mb-2"
-              placeholder="Final date"
               onChange={(e) => setFechaFinal(e.target.value)}
               value={fechaFinal}
             />
-            <label className="mb-2">Description</label>
+            <label className="mb-2">Descripción</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Description"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
             />
-            <label className="mb-2">amount to donate</label>
+            <label className="mb-2">Cantidad a Donar</label>
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="Amount to donate"
               onChange={(e) => setAmount(e.target.value)}
               value={amount}
             />
@@ -73,7 +68,7 @@ export const NewProject = () => {
               className="btn btn-lg btn-dark btn-block w-100"
               type="submit"
             >
-              Register
+              Registrar Proyecto
             </button>
           </form>
         </div>

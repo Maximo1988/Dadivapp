@@ -62,15 +62,7 @@ export const Navbar = () => {
               <b>Salir</b>
             </Link>
           </div>
-
         )}
-
-
-
-
-
-
-
       </div>
     </nav>
   );

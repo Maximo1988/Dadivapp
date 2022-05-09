@@ -26,19 +26,21 @@ export const Beneficiaries = () => {
             <h5 className="card-title">
               {store.dataUser?.first_name} {store.dataUser?.last_name}
             </h5>
-            <p className="card-text">{store.dataUser?.role ===1 ? "Donador":"Beneficiario"}</p>
+            <p className="card-text">
+              {store.dataUser?.role === 1 ? "Donador" : "Beneficiario"}
+            </p>
           </div>{" "}
         </div>
       </header>
       <div className="d-flex justify-content-around">
         <button className="btn btn-primary" onClick={() => setPage("projects")}>
-          Projects
+          Proyectos
         </button>
         <button
           className="btn btn-primary"
           onClick={() => setPage("NewProject")}
         >
-          New Project
+          Nuevo Proyecto
         </button>
       </div>
       <hr />
