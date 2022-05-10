@@ -76,6 +76,7 @@ class Projects(db.Model):
             "name": self.name,
             "date_start": self.date_start,
             "date_finish": self.date_finish,
+            "description":self.description,
             "id_beneficiary": self.id_beneficiary,
             "donative_amount": self.donative_amount
 
