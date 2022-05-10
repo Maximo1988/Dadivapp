@@ -67,6 +67,57 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(`error from database -- ${e}`);
         }
       },
+
+      profilechange: async (
+        email,
+        firstName,
+        lastName,
+        address,
+        phone,
+        document,
+        country,
+        role,
+        paypalLink
+      ) => {
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        let raw = JSON.stringify({
+          email: email,
+          first_name: firstName,
+          last_name: lastName,
+          address: address,
+          phone: phone,
+          document: document,
+          country: country,
+          role: role,
+          paypal_link: paypalLink,
+        });
+
+        let requestOptions = {
+          method: "PUT",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/user",
+            requestOptions
+          );
+
+          const data = await response.json();
+          if (!data.message) {
+            setStore({ dataUser: data });
+          }
+
+          console.log(data);
+        } catch (e) {
+          console.error(`error from database -- ${e}`);
+        }
+      },
+
       login: async (email, password) => {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -93,7 +144,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           localStorage.setItem("token", data.access_token);
           setStore({ token: data.access_token });
-          setStore({ dataUser: data.user })
+          setStore({ dataUser: data.user });
         } catch (e) {
           console.error(`error from database -- ${e}`);
         }
@@ -272,12 +323,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       Sign_out: async () => {
         const token = localStorage.removeItem("token") || "";
-        setStore({ token: "" })
-        console.log("token")
-      }
-
+        setStore({ token: "" });
+        console.log("token");
+      },
     },
-
   };
 };
 
