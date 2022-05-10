@@ -76,11 +76,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         phone,
         document,
         country,
-        role,
         paypalLink
       ) => {
         let myHeaders = new Headers();
+        const token = localStorage.getItem("token") || "";
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
 
         let raw = JSON.stringify({
           email: email,
@@ -90,7 +91,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           phone: phone,
           document: document,
           country: country,
-          role: role,
           paypal_link: paypalLink,
         });
 

@@ -1,10 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 
 export const Profile_Form = (props) => {
   const { store, actions } = useContext(Context);
-  const [modoEdicion, setModoEdicion] = useState(true);
+  const [modoEdicion, setModoEdicion] = useState(false);
+  const [telefonoinput, setTelefonoInput] = useState(store.dataUser.phone);
+  const [emailinput, setEmailInput] = useState(store.dataUser.email);
+  const [firstnameinput, setFirstnameInput] = useState(
+    store.dataUser.first_name
+  );
+  const [lastnameinput, setLastnameInput] = useState(store.dataUser.last_name);
+  const [addressinput, setAddressInput] = useState(store.dataUser.address);
+  const [documentoinput, setDocumentoInput] = useState(store.dataUser.document);
+  const [countryinput, setCountryInput] = useState("");
 
   const editar = () => {
     setModoEdicion(true);
@@ -12,6 +21,23 @@ export const Profile_Form = (props) => {
 
   const guardar = () => {
     setModoEdicion(false);
+    console.log("se presionó el boton guardar");
+    let updateuser = actions.profilechange(
+      emailinput,
+      firstnameinput,
+      lastnameinput,
+      addressinput,
+      telefonoinput,
+      documentoinput,
+      countryinput,
+      store.dataUser?.paypal_link
+    );
+    store.dataUser.phone = updateuser.phone;
+    store.dataUser.adress = updateuser.address;
+    store.dataUser.first_name = updateuser.first_name;
+    store.dataUser.last_name = updateuser.last_name;
+    store.dataUser.document = updateuser.document;
+    store.dataUser.country = updateuser.country;
   };
 
   return (
@@ -23,9 +49,11 @@ export const Profile_Form = (props) => {
               type="email"
               className="form-control"
               id="colFormLabel"
-              placeholder="Email"
+              placeholder={store.dataUser?.email}
               disabled={true}
-              value={store.dataUser?.email}
+              onChange={(e) => {
+                setEmailInput(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -36,9 +64,11 @@ export const Profile_Form = (props) => {
               type="nombre"
               className="form-control"
               id="colFormLabel"
-              placeholder="Nombre"
+              placeholder={store.dataUser?.first_name}
               disabled={true}
-              value={store.dataUser?.first_name}
+              onChange={(e) => {
+                setFirstnameInput(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -49,9 +79,11 @@ export const Profile_Form = (props) => {
               type="apellido"
               className="form-control"
               id="colFormLabel"
-              placeholder="Apellido"
+              placeholder={store.dataUser?.last_name}
               disabled={true}
-              value={store.dataUser?.last_name}
+              onChange={(e) => {
+                setLastnameInput(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -62,9 +94,11 @@ export const Profile_Form = (props) => {
               type="direccion"
               className="form-control"
               id="colFormLabel"
-              placeholder="Dirección"
+              placeholder={store.dataUser?.address}
               disabled={true}
-              value={store.dataUser?.address}
+              onChange={(e) => {
+                setAddressInput(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -75,9 +109,11 @@ export const Profile_Form = (props) => {
               type="telefono"
               className="form-control"
               id="colFormLabel"
-              placeholder="Teléfono"
+              placeholder={store.dataUser?.phone}
               disabled={modoEdicion ? false : true}
-              value={store.dataUser?.phone}
+              onChange={(e) => {
+                setTelefonoInput(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -88,9 +124,11 @@ export const Profile_Form = (props) => {
               type="documento"
               className="form-control"
               id="colFormLabel"
-              placeholder="Documento"
+              placeholder={store.dataUser?.document}
               disabled={modoEdicion ? false : true}
-              value={store.dataUser?.documento}
+              onChange={(e) => {
+                setDocumentoInput(e.target.value);
+              }}
             />
           </div>
         </div>
