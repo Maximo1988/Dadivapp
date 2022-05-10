@@ -93,6 +93,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           localStorage.setItem("token", data.access_token);
           setStore({ token: data.access_token });
+          setStore({ dataUser: data.user })
         } catch (e) {
           console.error(`error from database -- ${e}`);
         }
@@ -271,11 +272,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(`error from database -- ${e}`);
         }
       },
+      Sign_out: async () => {
+        const token = localStorage.removeItem("token") || "";
+        setStore({ token: "" })
+        console.log("token")
+      }
+
     },
 
-    removeToken: () => {
-      localStorage.removeItem("token");
-    },
   };
 };
 
