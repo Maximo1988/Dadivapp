@@ -224,7 +224,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           const data = await response.json();
-          setStore({ Projects_benef: data });
+          if (!data.msg) {
+            setStore({ Projects_benef: data });
+          }
 
           console.log(data);
         } catch (e) {

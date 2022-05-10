@@ -23,9 +23,7 @@ export const Donadores = () => {
           <b>Proyectos Disponibles</b>
         </h2>
       </div>
-      <div>
-        <CardInfo />
-      </div>
+    
       <div className="d-flex justify-content-center pt-5 pb-5 m-5 ">
         <div className="card w-100">
           <div className="card-body d-flex justify-content-around row ">

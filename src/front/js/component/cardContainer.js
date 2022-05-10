@@ -13,14 +13,17 @@ export function CardContainer(props) {
 
   return (
     <div>
-      <button>boton</button>
       <div className="card estilo border-info pb-3 ml-5 w-100">
-        <div className="card-header">{props.nombre}</div>
+        <div className="card-header">{props.Name}</div>
         <div className="card-body text-body">
-          <h5 className="card-subtitle mb-2 text-muted">{props.Fecha_final}</h5>
-          <p className="card-text">{props.Monto_donado}</p>
+          <img
+            src="https://i.picsum.photos/id/678/300/200.jpg?hmac=sDet5Lg89tvfQCyBDCf4w7h1z0kXFaNilsP99PZW8tc"
+            className="card-img-top"
+            alt="..."
+          ></img>
+          <p className="card-text">Monto necesario $ {props.Donative_amount}</p>
           {statusCard === true ? (
-            <p className="card-text">{props.Descripcion}</p>
+            <p className="card-text">{props.Description}</p>
           ) : (
             ""
           )}
@@ -141,10 +144,14 @@ export function CardContainer(props) {
           )}
         </div>
         <footer className="blockquote-footer">
-          <cite title="Source Title">dd/mm/año</cite>
+          <cite title="Source Title">
+            Fecha Inicio: <b> {props.Date_start}</b>{" "}
+          </cite>
         </footer>
         <footer className="blockquote-footer">
-          <cite title="Source Title">dd/mm/año</cite>
+          <cite title="Source Title">
+            Fecha Fin: <b>{props.Date_finish}</b>
+          </cite>
         </footer>
       </div>
     </div>
