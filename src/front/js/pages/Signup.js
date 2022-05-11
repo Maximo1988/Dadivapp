@@ -74,7 +74,7 @@ export const Signup = () => {
           Swal.fire("Error en Registro", `${store.signupOK}`, "error");
         } else {
           Swal.fire("Usuario Registrado", "¡Gracias!", "success");
-          history.push("/");
+          history.push("/login");
         }
       });
   };
