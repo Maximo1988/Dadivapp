@@ -143,7 +143,7 @@ export function CardContainer(props) {
             </div>
           )}
         </div>
-        <footer className="blockquote-footer">
+        <footer className="blockquote-footer mt-2">
           <cite title="Source Title">
             Fecha Inicio: <b> {props.Date_start}</b>{" "}
           </cite>
