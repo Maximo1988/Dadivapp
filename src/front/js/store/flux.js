@@ -12,8 +12,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       signupOK: "",
       dataDonaciones: [],
       postDonaciones: [],
+      projectoBeneficiario: "",
     },
     actions: {
+      projectoBeneficiario_close_modal: () => {
+        setStore({
+          projectoBeneficiario: "",
+        });
+      },
       signup: async (
         email,
         pass,
@@ -93,7 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           localStorage.setItem("token", data.access_token);
           setStore({ token: data.access_token });
-          setStore({ dataUser: data.user })
+          setStore({ dataUser: data.user });
         } catch (e) {
           console.error(`error from database -- ${e}`);
         }
@@ -234,7 +240,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      Projects_create: async (
+      projects_create: async (
         name,
         date_finish,
         description,
@@ -265,8 +271,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           const data = await response.json();
-          setStore({ Projects_create: data });
-
+          if (data?.message) {
+            setStore({
+              projectoBeneficiario: data.message,
+            });
+          } else {
+            setStore({ Projects_create: data });
+          }
           console.log(data);
         } catch (e) {
           console.error(`error from database -- ${e}`);
@@ -274,12 +285,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       Sign_out: async () => {
         const token = localStorage.removeItem("token") || "";
-        setStore({ token: "" })
-        console.log("token")
-      }
-
+        setStore({ token: "" });
+        console.log("token");
+      },
     },
-
   };
 };
 

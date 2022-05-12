@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
+import Swal from "sweetalert2";
 
-export const NewProject = () => {
-  const [projectName, setProjectName] = React.useState("");
-  const [fechaInicio, setFechaInicio] = React.useState("");
-  const [fechaFinal, setFechaFinal] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [amount, setAmount] = React.useState("");
-
-  const [error, setError] = React.useState(null);
+export const NewProject = (props) => {
+  const [projectName, setProjectName] = useState("");
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFinal, setFechaFinal] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState(null);
+  const store = useContext(Context);
 
   const procesarDatos = (e) => {
     e.preventDefault();
@@ -20,6 +22,36 @@ export const NewProject = () => {
     ) {
       setError("completar todos los datos");
     }
+  };
+const clearForm=()=>{
+  setProjectName("")
+  setFechaInicio("")
+  setFechaFinal("")
+  setDescription("")
+  setAmount("")
+
+}
+  const crearProyecto = () => {
+    store.actions
+      .projects_create(projectName, fechaFinal, description, amount)
+      .then(() => {
+        if (store.projectoBeneficiario) {
+          Swal.fire(
+            "Error en la creación del proyecto",
+            `${store.projectoBeneficiario}`,
+            "error"
+          );
+        } else {
+          Swal.fire("Proyecto Registrado", "¡Gracias!", "success")
+          .then((result) => {
+            if (result.isConfirmed) {
+           store.actions.projectoBeneficiario_close_modal()
+           clearForm()
+           props.setpage("projects")
+            }
+            })
+        }
+      });
   };
 
   return (
@@ -66,6 +98,7 @@ export const NewProject = () => {
             {error ? <div className="alert alert-danger">{error}</div> : null}
             <button
               className="btn btn-lg btn-dark btn-block w-100"
+              onClick={() => crearProyecto()}
               type="submit"
             >
               Registrar Proyecto
