@@ -81,7 +81,7 @@ export const Signup = () => {
 
   return (
     <div className="mt-5">
-      <h3 className="text-center">Registro</h3>
+      <h3 className="text-center text-info">Registro</h3>
       <hr />
       <div className="row justify-content-center">
         <div className="col-12 col-sm-8 col-md-6 col-xl-4">
@@ -178,7 +178,7 @@ export const Signup = () => {
             </div>
             {error ? <div className="alert alert-danger">{error}</div> : null}
             <button
-              className="btn btn-lg btn-dark btn-block w-100"
+              className="btn btn-lg btn-info btn-block w-100 text-light"
               type="submit"
             >
               Crear Usuario

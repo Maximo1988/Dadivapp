@@ -55,7 +55,7 @@ export const Login = () => {
     <div className="mt-5">
       {store.token != "" ? <Redirect to="/" /> : null}
 
-      <h3 className="text-center">Acceso</h3>
+      <h3 className="text-center text-info">Acceso</h3>
       <hr />
       <div className="row justify-content-center">
         <div className="col-12 col-sm-8 col-md-6 col-xl-4">
@@ -79,7 +79,7 @@ export const Login = () => {
               value={pass}
             />
             <button
-              className="btn btn-lg btn-dark w-100"
+              className="btn btn-lg btn-info w-100 text-light"
               type="submit"
               onClick={() => setLogin(true)}
             >

@@ -6,7 +6,7 @@ const CardOpinion = (props) => {
         <div className="card border-info pb-3 Perfiles w-100">
             <div className="card-header">{props.Header}</div>
             <div className="card-body text-body">
-                <h5 className="card-title">{props.Info}</h5>
+                <h5 className="card-title text-info">{props.Info}</h5>
                 <p className="card-text">{props.Description}</p>
             </div>
             <div className='d-flex justify-content-center text-info'>

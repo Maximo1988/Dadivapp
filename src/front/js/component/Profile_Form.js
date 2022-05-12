@@ -116,7 +116,7 @@ export const Profile_Form = (props) => {
           </button>
         ) : (
           <button
-            className="btn btn-success btn-block"
+            className="btn btn-info btn-block text-light"
             onClick={() => guardar()}
           >
             Guardar
