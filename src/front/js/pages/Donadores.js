@@ -23,7 +23,7 @@ export const Donadores = () => {
       donativos += element.amount_donated;
     });
     setTotalDonado(donativos);
-  }, [totalDonado]);
+  }, [store.dataDonaciones]);
 
   return (
     <div>
@@ -113,7 +113,7 @@ export const Donadores = () => {
               {donationsList === false ? (
                 <button
                   onClick={() => setDonationsList(true)}
-                  className="btn btn-info text-white  ml-3"
+                  className="btn btn-info text-white ml-3"
                 >
                   Abrir Donaciones
                 </button>

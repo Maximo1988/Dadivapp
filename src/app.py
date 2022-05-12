@@ -17,6 +17,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from datetime import timedelta
 
 #from models import Person
 
@@ -28,6 +29,7 @@ app.url_map.strict_slashes = False
 bcrypt = Bcrypt(app)
 
 app.config["JWT_SECRET_KEY"] = "4geeks"  # Change this!
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 # database condiguration
