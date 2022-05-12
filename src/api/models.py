@@ -46,6 +46,7 @@ class User(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "address": self.address,
+            "phone": self.phone,
             "country":self.country,
             "document":self.document,
             "role": self.role,

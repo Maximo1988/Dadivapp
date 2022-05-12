@@ -73,6 +73,57 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(`error from database -- ${e}`);
         }
       },
+
+      profilechange: async (
+        email,
+        firstName,
+        lastName,
+        address,
+        phone,
+        document,
+        country,
+        paypalLink
+      ) => {
+        let myHeaders = new Headers();
+        const token = localStorage.getItem("token") || "";
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        let raw = JSON.stringify({
+          email: email,
+          first_name: firstName,
+          last_name: lastName,
+          address: address,
+          phone: phone,
+          document: document,
+          country: country,
+          paypal_link: paypalLink,
+        });
+
+        let requestOptions = {
+          method: "PUT",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/user",
+            requestOptions
+          );
+
+          const data = await response.json();
+          if (!data.message) {
+            setStore({ dataUser: data });
+          }
+
+          console.log(data);
+        } catch (e) {
+          console.error(`error from database -- ${e}`);
+        }
+      },
+
       login: async (email, password) => {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");

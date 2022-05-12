@@ -11,13 +11,12 @@ export const Profile = () => {
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col-12 col-sm-8 col-md-6 col-xl-4">
-          <img
-            src="https://i.picsum.photos/id/103/2592/1936.jpg?hmac=aC1FT3vX9bCVMIT-KXjHLhP6vImAcsyGCH49vVkAjPQ"
-            className="rounded card-img-top"
-            alt="..."
-          />
-        </div>
+        <img
+          height="200px"
+          sizes="contain"
+          src="https://i.picsum.photos/id/202/2000/300.jpg?hmac=XOeg5tys5i8zxP_yEtuCCP7h6Fvy4cGWhm8KfoB7pcE"
+          alt="..."
+        />
       </div>
       <div className="container">
         <Profile_Form />
