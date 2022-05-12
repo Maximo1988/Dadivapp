@@ -13,7 +13,7 @@ export const Profile_Form = (props) => {
   const [lastnameinput, setLastnameInput] = useState(store.dataUser.last_name);
   const [addressinput, setAddressInput] = useState(store.dataUser.address);
   const [documentoinput, setDocumentoInput] = useState(store.dataUser.document);
-  const [countryinput, setCountryInput] = useState("");
+  const [countryinput, setCountryInput] = useState(store.dataUser.country);
 
   const editar = () => {
     setModoEdicion(true);
@@ -33,17 +33,19 @@ export const Profile_Form = (props) => {
       store.dataUser?.paypal_link
     );
     store.dataUser.phone = updateuser.phone;
-    store.dataUser.adress = updateuser.address;
+    store.dataUser.address = updateuser.address;
     store.dataUser.first_name = updateuser.first_name;
     store.dataUser.last_name = updateuser.last_name;
     store.dataUser.document = updateuser.document;
     store.dataUser.country = updateuser.country;
   };
+  console.log(store.dataUser);
 
   return (
     <div className="text-center mt-4">
       <form>
         <div className="form-group row d-flex justify-content-center mt-2">
+          <div className="col-sm-2">Email</div>
           <div className="col-sm-3">
             <input
               type="email"
@@ -59,13 +61,14 @@ export const Profile_Form = (props) => {
         </div>
 
         <div className="form-group row d-flex justify-content-center mt-2">
+          <div className="col-sm-2">Nombre</div>
           <div className="col-sm-3">
             <input
               type="nombre"
               className="form-control"
               id="colFormLabel"
               placeholder={store.dataUser?.first_name}
-              disabled={true}
+              disabled={modoEdicion ? false : true}
               onChange={(e) => {
                 setFirstnameInput(e.target.value);
               }}
@@ -74,13 +77,14 @@ export const Profile_Form = (props) => {
         </div>
 
         <div className="form-group row d-flex justify-content-center mt-2">
+          <div className="col-sm-2">Apellido</div>
           <div className="col-sm-3">
             <input
               type="apellido"
               className="form-control"
               id="colFormLabel"
               placeholder={store.dataUser?.last_name}
-              disabled={true}
+              disabled={modoEdicion ? false : true}
               onChange={(e) => {
                 setLastnameInput(e.target.value);
               }}
@@ -89,13 +93,14 @@ export const Profile_Form = (props) => {
         </div>
 
         <div className="form-group row d-flex justify-content-center mt-2">
+          <div className="col-sm-2">Dirección</div>
           <div className="col-sm-3">
             <input
               type="direccion"
               className="form-control"
               id="colFormLabel"
               placeholder={store.dataUser?.address}
-              disabled={true}
+              disabled={modoEdicion ? false : true}
               onChange={(e) => {
                 setAddressInput(e.target.value);
               }}
@@ -104,6 +109,7 @@ export const Profile_Form = (props) => {
         </div>
 
         <div className="form-group row d-flex justify-content-center mt-2">
+          <div className="col-sm-2">Teléfono</div>
           <div className="col-sm-3">
             <input
               type="telefono"
@@ -119,6 +125,7 @@ export const Profile_Form = (props) => {
         </div>
 
         <div className="form-group row d-flex justify-content-center mt-2">
+          <div className="col-sm-2">No. Documento</div>
           <div className="col-sm-3">
             <input
               type="documento"
@@ -134,6 +141,23 @@ export const Profile_Form = (props) => {
         </div>
 
         <div className="form-group row d-flex justify-content-center mt-2">
+          <div className="col-sm-2">País</div>
+          <div className="col-sm-3">
+            <input
+              type="pais"
+              className="form-control"
+              id="colFormLabel"
+              placeholder={store.dataUser?.country}
+              disabled={modoEdicion ? false : true}
+              onChange={(e) => {
+                setCountryInput(e.target.value);
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="form-group row d-flex justify-content-center mt-2">
+          <div className="col-sm-2">Paypal Link</div>
           <div className="col-sm-3">
             <input
               type="paypal-link"

@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useHistory } from "react-router-dom";
 
 import Swal from "sweetalert2";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
+  let history = useHistory();
 
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
@@ -38,6 +40,7 @@ export const Login = () => {
     actions.login(email, pass).then(() => {
       if (store.token) {
         Swal.fire("Acceso OK", "Usuario Encontrado", "success");
+        history.push("/profile");
       } else {
         Swal.fire(e.msg, "Usuario no Encontrado", "error");
       }

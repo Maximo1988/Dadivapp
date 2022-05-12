@@ -56,6 +56,8 @@ def update_user ():
         user.phone=body['phone']  
     if 'document' in body:
         user.document=body['document']
+    if 'country' in body:
+        user.country=body['country']
     if 'paypal_link' in body :
         user.paypal_link=body['paypal_link']
     if 'email' in body :
