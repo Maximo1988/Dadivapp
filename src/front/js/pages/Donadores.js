@@ -31,6 +31,7 @@ export const Donadores = () => {
         <h2>
           <b>Proyectos Disponibles</b>
         </h2>
+        <hr></hr>
         <div className="container row myScroll">
           {store.projects_all.length === 0 ? (
             <h5>No hay proyectos disponibles</h5>

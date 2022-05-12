@@ -14,14 +14,16 @@ export function CardContainer(props) {
   return (
     <div>
       <div className="card estilo border-info pb-3 ml-5 w-100">
-        <div className="card-header">{props.Name}</div>
+        <h3 className="card-header text-primary">{props.Name}</h3>
         <div className="card-body text-body">
           <img
             src="https://i.picsum.photos/id/678/300/200.jpg?hmac=sDet5Lg89tvfQCyBDCf4w7h1z0kXFaNilsP99PZW8tc"
             className="card-img-top"
             alt="..."
           ></img>
-          <p className="card-text">Monto necesario $ {props.Donative_amount}</p>
+          <h5 className="shadow p-2 mt-2 mb-2 bg-white rounded">
+            Monto necesario <b>$ {props.Donative_amount}</b>
+          </h5>
           {statusCard === true ? (
             <p className="card-text">{props.Description}</p>
           ) : (
@@ -30,7 +32,7 @@ export function CardContainer(props) {
           {statusCard === false ? (
             <button
               onClick={() => setStatusCard(true)}
-              className="btn btn-info text-white d-flex justify-content-around"
+              className="btn btn-info text-white d-flex justify-content-around col-12 col-sm-12 mb-2"
             >
               Leer más
             </button>
@@ -40,7 +42,7 @@ export function CardContainer(props) {
           {statusCard === true ? (
             <button
               onClick={() => setStatusCard(false)}
-              className="btn btn-info text-white d-flex justify-content-around"
+              className="btn btn-secondary text-white d-flex justify-content-around col-12 col-sm-12 mb-2"
             >
               Leer menos
             </button>
@@ -53,22 +55,20 @@ export function CardContainer(props) {
           ) : (
             <a
               href="https://www.paypal.com/ar/webapps/mpp/paypal-me"
-              className="btn btn-lg btn-dark btn-block"
+              className="btn btn-dark btn-block w-100"
             >
               Donar
             </a>
           )}
         </div>
-        <footer className="blockquote-footer mt-2">
-          <cite title="Source Title">
+        <div className="d-flex justify-content-between">
+          <footer className="mt-2 border mx-2">
             Fecha Inicio: <b> {props.Date_start}</b>{" "}
-          </cite>
-        </footer>
-        <footer className="blockquote-footer">
-          <cite title="Source Title">
+          </footer>
+          <footer className="mt-2 border mx-2">
             Fecha Fin: <b>{props.Date_finish}</b>
-          </cite>
-        </footer>
+          </footer>
+        </div>
       </div>
     </div>
   );
