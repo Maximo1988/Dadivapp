@@ -30,7 +30,7 @@ export function CardContainer(props) {
           {statusCard === false ? (
             <button
               onClick={() => setStatusCard(true)}
-              className="btn btn-info text-white"
+              className="btn btn-info text-white d-flex justify-content-around"
             >
               Leer más
             </button>
@@ -40,7 +40,7 @@ export function CardContainer(props) {
           {statusCard === true ? (
             <button
               onClick={() => setStatusCard(false)}
-              className="btn btn-info text-white"
+              className="btn btn-info text-white d-flex justify-content-around"
             >
               Leer menos
             </button>
@@ -51,96 +51,12 @@ export function CardContainer(props) {
           {props.notButtonDonate ? (
             ""
           ) : (
-            <div
-              className="dropdown myDropdown px-3"
-              style={{ float: "right" }}
-              onClick={() => toggleOpen()}
+            <a
+              href="https://www.paypal.com/ar/webapps/mpp/paypal-me"
+              className="btn btn-lg btn-dark btn-block"
             >
-              <button
-                className="btn btn-info text-white dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Donar
-              </button>
-              <div className={menuClass} aria-labelledby="dropdownMenuButton ">
-                <ul className="text-info bg-white">
-                  <div className="custom-control custom-radio">
-                    <input
-                      type="radio"
-                      id="customRadio1"
-                      name="customRadio"
-                      className="custom-control-input"
-                    ></input>
-                    <label
-                      className="custom-control-label"
-                      htmlFor="customRadio1"
-                    >
-                      Donar $1000
-                    </label>
-                  </div>
-                  <div className="custom-control custom-radio">
-                    <input
-                      type="radio"
-                      id="customRadio1"
-                      name="customRadio"
-                      className="custom-control-input"
-                    ></input>
-                    <label
-                      className="custom-control-label"
-                      htmlFor="customRadio1"
-                    >
-                      Donar $1500
-                    </label>
-                  </div>
-                  <div className="custom-control custom-radio">
-                    <input
-                      type="radio"
-                      id="customRadio1"
-                      name="customRadio"
-                      className="custom-control-input"
-                    ></input>
-                    <label
-                      className="custom-control-label"
-                      htmlFor="customRadio1"
-                    >
-                      Donar $2000
-                    </label>
-                  </div>
-                  <div className="custom-control custom-radio">
-                    <input
-                      type="radio"
-                      id="customRadio1"
-                      name="customRadio"
-                      className="custom-control-input"
-                    ></input>
-                    <label
-                      className="custom-control-label"
-                      htmlFor="customRadio1"
-                    >
-                      Donar $2500
-                    </label>
-                  </div>
-                  <div className="custom-control custom-radio">
-                    <input
-                      type="radio"
-                      id="customRadio1"
-                      name="customRadio"
-                      className="custom-control-input"
-                    ></input>
-                    <label
-                      className="custom-control-label"
-                      htmlFor="customRadio1"
-                    >
-                      Donar $2500
-                    </label>
-                  </div>
-                </ul>
-              </div>
-            </div>
+              Donar
+            </a>
           )}
         </div>
         <footer className="blockquote-footer mt-2">
