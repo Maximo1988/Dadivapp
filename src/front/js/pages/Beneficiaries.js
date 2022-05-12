@@ -11,7 +11,11 @@ export const Beneficiaries = () => {
   const [page, setPage] = React.useState("projects");
   useEffect(() => {
     actions.getDataUser(store.token);
+   
   }, []);
+  useEffect(()=>{
+  actions.Projects_benef();
+  },[page])
 
   return (
     <div className="container">
@@ -27,9 +31,9 @@ export const Beneficiaries = () => {
               {store.dataUser?.first_name} {store.dataUser?.last_name}
             </h5>
             <p className="card-text">
-              {store.dataUser?.role === 1 ? "Donador" : "Beneficiario"}
+               Beneficiario
             </p>
-          </div>{" "}
+          </div>
         </div>
       </header>
       <div className="d-flex justify-content-around">
@@ -46,7 +50,7 @@ export const Beneficiaries = () => {
       <hr />
       <div className="mt-3">
         {page == "projects" ? <Projects /> : null}
-        {page == "NewProject" ? <NewProject /> : null}
+        {page == "NewProject" ? <NewProject setpage={setPage}/> : null}
       </div>
     </div>
   );
